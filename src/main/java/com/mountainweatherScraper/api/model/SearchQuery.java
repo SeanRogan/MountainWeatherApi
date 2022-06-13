@@ -1,0 +1,10 @@
+package com.mountainweatherScraper.api.model;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
+public class SearchQuery {
+    final String query;
+}

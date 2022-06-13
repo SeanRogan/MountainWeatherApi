@@ -10,4 +10,5 @@ class MountainWeatherScraperApiApplicationTests {
 	void contextLoads() {
 	}
 
+
 }

@@ -1,5 +1,6 @@
 package com.mountainweatherScraper.api.service;
 
+import com.mountainweatherScraper.api.repository.ReportRepository;
 import com.mountainweatherScraper.api.webscraper.DataScraper;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -19,7 +20,7 @@ import java.util.Map;
  */
 @Service
 public class DataService {
-
+    ReportRepository repo;
     @Autowired
     public DataService(DataScraper ds) {
         this.ds = ds;
@@ -28,7 +29,10 @@ public class DataService {
     final DataScraper ds;
     final public String baseUrl = "https://www.mountain-forecast.com";
 
-
+    private String getState(String query ){
+        //todo this method needs to be built
+        return"thestatethepeakisin";
+    }
     public HashMap<String,String> getAllSubRanges() {
         HashMap<String,String> subRangeUrls = new HashMap<>();
 
@@ -88,8 +92,8 @@ public class DataService {
      * and windchill temps, along with wind and weather conditions
      * and rainfall snowfall estimates
      */
-    public List<String[]> getWeatherData(String uri) {
-        List<String[]> dataList = new ArrayList<>();
+    public List<List<String>> getWeatherData(String uri) {
+        List<List<String>> dataList = new ArrayList<>();
         String weatherConditionsRow = "forecast__table-summary";
         String maxTempRow = "forecast__table-max-temperature";
         String minTempRow = "forecast__table-min-temperature";
@@ -104,34 +108,34 @@ public class DataService {
             //get high temps
             Elements maxTempElements = doc.getElementsByClass(maxTempRow)
                     .select("span.temp");
-            dataList.add(collectToArray(maxTempElements.iterator()));
+            dataList.add(collectToList(maxTempElements.iterator()));
 
             //get low temps
             Elements minTempElements = doc.getElementsByClass(minTempRow)
                     .select("span.temp");
-            dataList.add(collectToArray(minTempElements.iterator()));
+            dataList.add(collectToList(minTempElements.iterator()));
 
             //get windchill temps
             Elements windChillElements = doc.getElementsByClass(windChillRow)
                     .select("span.temp");
-            dataList.add(collectToArray(windChillElements.iterator()));
+            dataList.add(collectToList(windChillElements.iterator()));
 
             //get snowfall
             Elements snowFallElements = doc.getElementsByClass(snowFallRow)
                     .select("td.forecast__table-relative")
                     .select("span.snow");
-            dataList.add(collectToArray(snowFallElements.iterator()));
+            dataList.add(collectToList(snowFallElements.iterator()));
 
             //get rainfall
             Elements rainFallElements = doc.getElementsByClass(rainFallRow)
                     .select("td.forecast__table-relative")
                     .select("span.rain");
-            dataList.add(collectToArray(rainFallElements.iterator()));
+            dataList.add(collectToList(rainFallElements.iterator()));
 
             //get weather elements
             Elements weatherConditionElements = doc.getElementsByClass(weatherConditionsRow)
                     .select("td");
-            dataList.add(collectToArray(weatherConditionElements.iterator()));
+            dataList.add(collectToList(weatherConditionElements.iterator()));
 
             //get wind elements
             Elements windElements = doc.getElementsByClass(windRow)
@@ -141,30 +145,27 @@ public class DataService {
 
         return dataList;
     }
-
-    private String[] collectToArray(Iterator<Element> itr) {
-        String[] result = new String[18];
-        int counter = 0;
+//todo refactor this to use streams
+    private List<String> collectToList(Iterator<Element> itr) {
+        List<String> result = new ArrayList<>();
 
         while(itr.hasNext()) {
             Element current = itr.next();
-            result[counter] = current.text();
-            counter++;
+            result.add(current.text());
         }
 
         return result;
     }
+//todo refactor this to use streams
+    private List<String> getWindConditions(Iterator<Element> itr) {
 
-    private String[] getWindConditions(Iterator<Element> itr) {
-
-        String[] result = new String[18];
-        int counter = 0;
+        List<String> result = new ArrayList<>();
         while(itr.hasNext()) {
             Element current = itr.next();
-            String windspeed = current.select("text.wind-icon__val").text();
-            String windDirection = current.select("div.wind-icon__tooltip").text();
-            result[counter] = "Wind Conditions : " + windspeed + " " + windDirection;
-            counter++;
+            result.add("Wind Conditions: "
+                    + current.select("text.wind-icon__val").text()
+                    + " "
+                    + current.select("div.wind-icon__tooltip").text());
         }
 
         return result;

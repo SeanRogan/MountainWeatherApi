@@ -1,7 +1,11 @@
 package com.mountainweatherScraper.api.service;
 
+import com.mountainweatherScraper.api.repository.MountainPeakRepository;
+import com.mountainweatherScraper.api.repository.MountainRangeRepository;
 import com.mountainweatherScraper.api.repository.ReportRepository;
+import com.mountainweatherScraper.api.repository.SubRangeRepository;
 import com.mountainweatherScraper.api.webscraper.DataScraper;
+import lombok.NoArgsConstructor;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -18,26 +22,45 @@ import java.util.Map;
 /**
  * DataService contains business logic to process webscraped data and
  */
+@NoArgsConstructor
 @Service
 public class DataService {
-    ReportRepository repo;
     @Autowired
-    public DataService(DataScraper ds) {
+    public DataService(DataScraper ds,
+                       MountainPeakRepository peakRepo,
+                       MountainRangeRepository rangeRepo,
+                       SubRangeRepository subRangeRepo,
+                       ReportRepository reportRepo) {
         this.ds = ds;
+        this.peakRepo = peakRepo;
+        this.rangeRepo = rangeRepo;
+        this.subRangeRepo = subRangeRepo;
+        this.reportRepo = reportRepo;
     }
 
-    final DataScraper ds;
-    final public String baseUrl = "https://www.mountain-forecast.com";
+    final private String baseUrl = "https://www.mountain-forecast.com";
+    DataScraper ds;
+    MountainPeakRepository peakRepo;
+    MountainRangeRepository rangeRepo;
+    SubRangeRepository subRangeRepo;
+    ReportRepository reportRepo;
+
+    //initialize DB with all range and peak information
+    public void init() {
+
+    }
 
     private String getState(String query ){
         //todo this method needs to be built
         return"thestatethepeakisin";
     }
+
     public HashMap<String,String> getAllSubRanges() {
         HashMap<String,String> subRangeUrls = new HashMap<>();
 
         return subRangeUrls;
     }
+
     public HashMap<String,String> getAllMajorMountainRangeUrls() {
         HashMap<String,String> rangeUrls = new HashMap<>();
         String uri = baseUrl + "/mountain_ranges";
@@ -46,8 +69,9 @@ public class DataService {
                 .getElementsByClass("b-list-table__item-name--ranges")
                 .select("a[href]");
         for(Element e : elements) {
+            //saves each range key = name string , value = url string
             rangeUrls.put(e.text(),e.attr("href"));
-            e.remove();
+            //e.remove();
         }
         return rangeUrls;
     }

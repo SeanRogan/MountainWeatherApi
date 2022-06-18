@@ -15,14 +15,9 @@ import java.util.Objects;
 @NoArgsConstructor
 public class MountainPeak implements Serializable {
 
-    public MountainPeak(String peakName, String uri) {
-        this.peakName = peakName;
-        this.uri = uri;
-    }
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @MapsId
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@MapsId
     @Column(name = "peak_id")
     private Long peakId;
     @Column(name = "peak_name")
@@ -30,11 +25,15 @@ public class MountainPeak implements Serializable {
 
     @Column(name = "home_state")
     private String homeState;
+    @ManyToOne
+    private SubRange homeSubrange;
 
     @Column(name = "range_id")
-
     private Long rangeId;
     @Column(name = "uri")
-
     private String uri;
+    public MountainPeak(String peakName, String uri) {
+        this.peakName = peakName;
+        this.uri = uri;
+    }
 }

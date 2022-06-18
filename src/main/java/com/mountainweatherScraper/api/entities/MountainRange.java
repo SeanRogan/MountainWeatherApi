@@ -31,9 +31,17 @@ public class MountainRange implements Serializable {
     @JoinColumn(name = "subrange_id")
     private Set<SubRange> subRanges;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "peak_id")
-    private Set<MountainPeak> peaks;
+    public Set<SubRange> getSubRanges() {
+        return subRanges;
+    }
+
+    public void setSubRanges(Set<SubRange> subRanges) {
+        this.subRanges = subRanges;
+    }
+
+    //@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    //@JoinColumn(name = "peak_id")
+    //private Set<MountainPeak> peaks;
     public MountainRange(String rangeName, String uri) {
         this.rangeName = rangeName;
         this.uri = uri;

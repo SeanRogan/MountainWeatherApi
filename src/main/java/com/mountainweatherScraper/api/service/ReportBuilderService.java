@@ -9,6 +9,7 @@ import com.mountainweatherScraper.api.repository.MountainPeakRepository;
 import com.mountainweatherScraper.api.repository.ReportRepository;
 import com.mountainweatherScraper.api.webscraper.DataScraper;
 import org.springframework.boot.json.GsonJsonParser;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,13 @@ import java.util.List;
 
 @Service
 public class ReportBuilderService {
-//todo need to figure out how to put the three reports together into a forecast
+    Gson g = new Gson();
+
+    //todo need to figure out how to put the three reports together into a forecast
     MountainPeakRepository peakRepo;
-    ReportRepository reportRepo;
-    DataService dataService =  new DataService(new DataScraper());
+
+
+    DataService dataService =  new DataService();
     public ReportBuilderService() {
     }
 
@@ -28,9 +32,15 @@ public class ReportBuilderService {
         Forecast weatherForecast = buildForecast(peakId, dataService.getWeatherData(
                 peakRepo.getPeakUriByPeakAndRangeId(
                         peakId,rangeId)));
-
-        Gson g = new Gson();
-        ResponseEntity<String> response = new ResponseEntity<>(g.toJson(weatherForecast), HttpStatus.OK);
+        //todo need if statement to make sure weather forecast is valid
+        // before building this response and
+        // an error response for when it isnt valid
+        HttpStatus status = HttpStatus.OK;
+        HttpHeaders headers = new HttpHeaders();
+        //set headers
+        String body = g.toJson(weatherForecast);
+        ResponseEntity<String> response;
+        response = new ResponseEntity<>(body, headers, status);
 
         return response;
 

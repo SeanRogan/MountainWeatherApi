@@ -18,7 +18,7 @@ import java.util.Set;
 public class SubRange implements Serializable {
     @Id //for primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @MapsId
+    //@MapsId
     @Column(name = "subrange_id")
     private Long subrangeId;
     @Column(name = "home_range_id")

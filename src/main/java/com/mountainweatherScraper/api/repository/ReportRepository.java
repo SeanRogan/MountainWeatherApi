@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface ReportRepository extends JpaRepository<Long, String> {
+public interface ReportRepository extends JpaRepository<Report, Long> {
     @Query("SELECT r FROM Report r WHERE r.peakId=?1")
     Report getReportByPeakAndRangeId(Long peakId);
 }

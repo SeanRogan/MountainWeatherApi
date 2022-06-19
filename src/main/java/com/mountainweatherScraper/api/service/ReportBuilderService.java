@@ -1,14 +1,11 @@
 package com.mountainweatherScraper.api.service;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializer;
 import com.mountainweatherScraper.api.entities.Report;
 import com.mountainweatherScraper.api.model.Forecast;
 import com.mountainweatherScraper.api.repository.MountainPeakRepository;
-import com.mountainweatherScraper.api.repository.ReportRepository;
-import com.mountainweatherScraper.api.webscraper.DataScraper;
-import org.springframework.boot.json.GsonJsonParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +15,11 @@ import java.util.List;
 
 @Service
 public class ReportBuilderService {
-    Gson g = new Gson();
 
+    private static final Logger logger = LoggerFactory.getLogger(ReportBuilderService.class);
+    Gson g = new Gson();
     //todo need to figure out how to put the three reports together into a forecast
     MountainPeakRepository peakRepo;
-
-
     DataService dataService =  new DataService();
     public ReportBuilderService() {
     }

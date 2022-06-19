@@ -65,13 +65,11 @@ public class DataService {
         //for each range in list, create new mountain range entity,
         // getAllSubRanges() and getAllPeaksInRange() should trigger
         // creation of all peaks and sub range entities.
-        mountainRangeUriMap.forEach((key, value) -> {
+        mountainRangeUriMap.forEach((key, value) ->
             rangeRepo.save(new MountainRange(key,
                     baseUrl + value,
                     getAllSubRanges(value),
-                    getAllPeaksInRange(value)));
-            logger.debug("created mountain range" + key);
-        });
+                    getAllPeaksInRange(value))));
         }
 
 

@@ -1,19 +1,16 @@
 package com.mountainweatherScraper.api.controller;
 
-import com.google.gson.JsonObject;
-import com.mountainweatherScraper.api.entities.Report;
 import com.mountainweatherScraper.api.service.ForecastBuilderService;
 import com.mountainweatherScraper.api.service.ReportBuilderService;
 import com.mountainweatherScraper.api.service.RequestHandlerService;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.persistence.GeneratedValue;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -22,7 +19,7 @@ public class ReportsController {
 //todo need a get mapping to return mountainid by mountain name and state,
 // need
 
-
+    private static final Logger logger = LoggerFactory.getLogger(ReportsController.class);
     @GetMapping(value = "/daily/{rangeId}&{mountainId}")
     public ResponseEntity<String> getDailyReportByMountain(HttpServletRequest request, @PathVariable Long mountainId, @PathVariable Long rangeId) {
         //request handler takes the request and handles authentication/authorization

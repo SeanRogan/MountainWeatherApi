@@ -1,7 +1,6 @@
 package com.mountainweatherScraper.api.controller;
 
 import com.mountainweatherScraper.api.service.ForecastBuilderService;
-import com.mountainweatherScraper.api.service.ReportBuilderService;
 import com.mountainweatherScraper.api.service.RequestHandlerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,27 +15,24 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/report")
 public class ReportsController {
-//todo need a get mapping to return mountainid by mountain name and state,
-// need
+//todo need a get mapping to return mountainid by mountain name and state
+
+// todo future feature : request handler takes the request and handles authentication/authorization
 
     private static final Logger logger = LoggerFactory.getLogger(ReportsController.class);
-    @GetMapping(value = "/daily/{rangeId}&{mountainId}")
-    public ResponseEntity<String> getDailyReportByMountain(HttpServletRequest request, @PathVariable Long mountainId, @PathVariable Long rangeId) {
-        //request handler takes the request and handles authentication/authorization
-        new RequestHandlerService(request);
-
+    @GetMapping(value = "/daily/{mountainId}")
+    public ResponseEntity<String> getDailyReportByMountain(HttpServletRequest request, @PathVariable Long mountainId) {
+        RequestHandlerService reqHandler = new RequestHandlerService(request);
         //if request is correct, instantiate the report builder service
-        ReportBuilderService service = new ReportBuilderService();
-        return service.createReportResponse(mountainId, rangeId);
+        ForecastBuilderService service = new ForecastBuilderService();
+        return service.createWeatherReportResponse(mountainId, 1);
 
         //if request is malformed, go to error handler?
     }
     @GetMapping("/extended/{mountainId}")
-    public String getSixDayForecastByMountain(@PathVariable String mountainId) {
-        ReportBuilderService reportService = new ReportBuilderService();
-        ForecastBuilderService service = new ForecastBuilderService(mountainId);
-
-        return "not working yet";
+    public ResponseEntity<String> getSixDayForecastByMountain(@PathVariable Long mountainId) {
+        ForecastBuilderService service = new ForecastBuilderService();
+        return service.createWeatherReportResponse(mountainId, 6);
     }
 
 }

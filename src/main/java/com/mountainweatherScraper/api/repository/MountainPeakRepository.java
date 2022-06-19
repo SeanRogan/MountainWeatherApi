@@ -14,6 +14,4 @@ public interface MountainPeakRepository extends JpaRepository<MountainPeak, Long
     @Query("SELECT m.uri FROM mountain_peak m WHERE m.peakId = ?1 AND m.rangeId = ?2")
     String getPeakUriByPeakAndRangeId(Long peakId, Long rangeId);
 
-    @Query("SELECT m FROM mountain_peak m WHERE m.homeState = ?1")
-    Map<Long,MountainPeak> getAllMountainsByHomeState(String state);
 }

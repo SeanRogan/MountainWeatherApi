@@ -21,22 +21,20 @@ public class SubRange implements Serializable {
     //@MapsId
     @Column(name = "subrange_id")
     private Long subrangeId;
-    @Column(name = "home_range_id")
-    private Long homeRangeId;
+    @Column(name = "home_range_uri")
+    private String homeRangeUri;
     @Column(name = "range_name")
     private String rangeName;
-
     @Column(name = "uri")
     private String uri;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "peak_id")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "peakId")
     private Set<MountainPeak> peaks;
 
 
-    public SubRange(String rangeName, Long homeRangeId, String uri) {
+    public SubRange(String rangeName, String uri, String homeRangeUri) {
         this.rangeName = rangeName;
-        this.homeRangeId = homeRangeId;
+        this.homeRangeUri = homeRangeUri;
         this.uri = uri;
     }
 }

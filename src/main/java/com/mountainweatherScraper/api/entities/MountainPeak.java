@@ -17,23 +17,24 @@ public class MountainPeak implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@MapsId
-    @Column(name = "peak_id")
+    @Column
     private Long peakId;
-    @Column(name = "peak_name")
+    @Column
     private String peakName;
-
-    @Column(name = "home_state")
-    private String homeState;
+    @Column
+    private String homeSubrangeUri;
+    @Column
+    private Long rangeId;
     @ManyToOne
     private SubRange homeSubrange;
-
-    @Column(name = "range_id")
-    private Long rangeId;
-    @Column(name = "uri")
+    @ManyToOne
+    private MountainRange homeRange;
+    @Column
     private String uri;
-    public MountainPeak(String peakName, String uri) {
+    public MountainPeak(String peakName, String uri, String subRangeUri) {
         this.peakName = peakName;
         this.uri = uri;
+        this.homeSubrangeUri = subRangeUri;
+
     }
 }

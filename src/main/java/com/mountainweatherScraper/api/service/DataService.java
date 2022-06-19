@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,9 @@ import java.util.Set;
 @NoArgsConstructor
 @Service
 public class DataService {
+
+    private static final Logger logger = LoggerFactory.getLogger(DataService.class);
+
     @Autowired
     public DataService(DataScraper ds,
                        MountainPeakRepository peakRepo,
@@ -50,7 +55,7 @@ public class DataService {
     MountainRangeRepository rangeRepo;
     SubRangeRepository subRangeRepo;
     ReportRepository reportRepo;
-/*
+
     //initialize DB with all range and peak information
     @Bean
     //initialize DB with all range and peak information
@@ -60,11 +65,15 @@ public class DataService {
         //for each range in list, create new mountain range entity,
         // getAllSubRanges() and getAllPeaksInRange() should trigger
         // creation of all peaks and sub range entities.
-        mountainRangeUriMap.forEach((key, value) -> rangeRepo.save(new MountainRange(key,
-                baseUrl + value,
-                getAllSubRanges(value),
-                getAllPeaksInRange(value))));
-    }
+        mountainRangeUriMap.forEach((key, value) -> {
+            rangeRepo.save(new MountainRange(key,
+                    baseUrl + value,
+                    getAllSubRanges(value),
+                    getAllPeaksInRange(value)));
+            logger.debug("created mountain range" + key);
+        });
+        }
+
 
     private Set<MountainPeak> getAllPeaksInRange(String uri) {
 
@@ -112,17 +121,6 @@ public class DataService {
             subRanges.add(new SubRange(e.text(), baseUrl + e.attr("href"), uri));
         }
         return subRanges;
-    }
-*/
-    private String getState(String query ){
-        //todo this method needs to be built
-        return"thestatethepeakisin";
-    }
-
-    public HashMap<String,String> getAllSubRanges() {
-        HashMap<String,String> subRangeUrls = new HashMap<>();
-
-        return subRangeUrls;
     }
 
     public HashMap<String,String> getAllMajorMountainRangeUrls() {

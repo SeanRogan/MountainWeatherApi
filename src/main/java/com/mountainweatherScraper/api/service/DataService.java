@@ -18,7 +18,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -168,8 +167,6 @@ public class DataService {
     }
 
     /**
-     *
-     *
      * @param uri the uri of the specific mountain peak with which the weather data is associated.
      *
      * @return List<String[]> dataList - returns a list of string arrays,
@@ -187,6 +184,7 @@ public class DataService {
         String rainFallRow = "forecast__table-rain";
         String snowFallRow = "forecast__table-snow";
         String windRow = "forecast__table-wind";
+        logger.info("scraping weather data from: " + uri);
         Document doc = ds.scrapeDocument(uri);
 
         if(doc != null) {

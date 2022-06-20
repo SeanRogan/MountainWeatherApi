@@ -112,7 +112,7 @@ public class ForecastBuilderService{
         List<Forecast> forecastList = new ArrayList<>();
 
         for(int n = 0; n < day; n++) {
-            forecastList.add(buildForecast(peakId,weatherData,day));
+            forecastList.add(buildForecast(peakId,weatherData,n));
         }
         return forecastList;
     }

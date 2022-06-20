@@ -13,13 +13,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 @Service
 public class ForecastBuilderService{
 
-    //todo need a way to handle fahrenheit/celsius conversion
+    //todo need a way to handle fahrenheit/celsius conversion.
+    // need to accept a header with a getForecast request specifying F or C,
+    // default to C
 
     private static final Logger logger = LoggerFactory.getLogger(ForecastBuilderService.class);
 
@@ -47,7 +48,7 @@ public class ForecastBuilderService{
         String body = g.toJson(weatherForecast);
         ResponseEntity<String> response;
         response = new ResponseEntity<>(body, headers, status);
-
+        logger.info("created responseEntity : \n" + response +"\n");
         return response;
 
     }
@@ -58,16 +59,40 @@ public class ForecastBuilderService{
         List<String> minTemps = weatherData.get(1);
         List<String> windChillTemps = weatherData.get(2);
         List<String> snowForecast = weatherData.get(3);
-        Collections.replaceAll(snowForecast, "-","0.0");
         List<String> rainForecast = weatherData.get(4);
-        Collections.replaceAll(rainForecast, "-","0.0");
         List<String> weatherSummary = weatherData.get(5);
         List<String> windCondition = weatherData.get(6);
-        //todo this is causing the error when there is a no
-        Report amReport = new Report(peakId, maxTemps.get(num), minTemps.get(num), windChillTemps.get(num), Float.parseFloat(snowForecast.get(num)), Float.parseFloat(rainForecast.get(num)), weatherSummary.get(num), windCondition.get(num));
-        Report pmReport = new Report(peakId, maxTemps.get(num+1), minTemps.get(num+1), windChillTemps.get(num+1), Float.parseFloat(snowForecast.get(num+1)), Float.parseFloat(rainForecast.get(num+1)), weatherSummary.get(num+1), windCondition.get(num+1));
-        Report nightReport = new Report(peakId, maxTemps.get(num+2), minTemps.get(num+2), windChillTemps.get(num+2), Float.parseFloat(snowForecast.get(num+2)), Float.parseFloat(rainForecast.get(num+2)), weatherSummary.get(num+2), windCondition.get(num+2));
-
+        logger.trace("replacing: - with: 0.0 in precipitation forecasts");
+        Collections.replaceAll(snowForecast, "-","0.0");
+        Collections.replaceAll(rainForecast, "-","0.0");
+        logger.trace("creating AM report for day" + num);
+        Report amReport = new Report(peakId,
+                maxTemps.get(num),
+                minTemps.get(num),
+                windChillTemps.get(num),
+                Float.parseFloat(snowForecast.get(num)),
+                Float.parseFloat(rainForecast.get(num)),
+                weatherSummary.get(num),
+                windCondition.get(num));
+        logger.trace("creating PM report for day" + num);
+        Report pmReport = new Report(peakId,
+                maxTemps.get(num+1),
+                minTemps.get(num+1),
+                windChillTemps.get(num+1),
+                Float.parseFloat(snowForecast.get(num+1)),
+                Float.parseFloat(rainForecast.get(num+1)),
+                weatherSummary.get(num+1),
+                windCondition.get(num+1));
+        logger.trace("creating NIGHT report for day" + num);
+        Report nightReport = new Report(peakId,
+                maxTemps.get(num+2),
+                minTemps.get(num+2),
+                windChillTemps.get(num+2),
+                Float.parseFloat(snowForecast.get(num+2)),
+                Float.parseFloat(rainForecast.get(num+2)),
+                weatherSummary.get(num+2),
+                windCondition.get(num+2));
+        logger.trace("returning Forecast");
         return new Forecast(amReport,pmReport,nightReport);
 
     }

@@ -10,9 +10,7 @@ import java.util.Map;
 @Data
 public class Forecast implements Serializable {
     private final Map<String, Report> forecastData;
-    public Map<String, Report> getForecastData() {
-        return forecastData;
-    }
+
     public Forecast(Report amReport, Report pmReport, Report nightReport) {
         Map<String,Report> forecastDataMap = new HashMap<>();
 

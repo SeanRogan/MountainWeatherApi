@@ -28,7 +28,10 @@ import java.util.Set;
 
 
 /**
- * DataService contains business logic to process webscraped data and
+ * DataService is a service class.
+ * it contains business logic to control web-scraping of pages,
+ * populating the database with relevant information about pages on server start-up,
+ * and collect weather data from those pages.
  */
 @NoArgsConstructor
 @Service
@@ -57,17 +60,20 @@ public class DataService {
     @Bean
     //initialize DB with all range and peak information
     public void init() {
+        logger.info("Collecting Data to populate DB with mountain ranges, sub ranges, and mountain peaks.");
         //get all mountain ranges, key = name of range, value = range URI
         HashMap<String, String> mountainRangeUriMap = getAllMajorMountainRangeUrls();
         //for each range in list, create new mountain range entity,
         // getAllSubRanges() and getAllPeaksInRange() should trigger
         // creation of all peaks and sub range entities.
-        mountainRangeUriMap.forEach((key, value) ->
+        mountainRangeUriMap.forEach((key, value) ->{
+            logger.trace("Creating Mountain Range Entity in Database: "+ key);
             rangeRepo.save(new MountainRange(key,
                     baseUrl + value,
                     getAllSubRanges(value),
-                    getAllPeaksInRange(value))));
-        }
+                    getAllPeaksInRange(value)));
+        });
+    }
 
     private Set<MountainPeak> getAllPeaksInRange(String uri) {
 
@@ -224,7 +230,6 @@ public class DataService {
 
         return dataList;
     }
-//todo refactor this to use streams
     private List<String> collectToList(Iterator<Element> itr) {
         List<String> result = new ArrayList<>();
 
@@ -235,7 +240,6 @@ public class DataService {
 
         return result;
     }
-//todo refactor this to use streams
     private List<String> getWindConditions(Iterator<Element> itr) {
 
         List<String> result = new ArrayList<>();

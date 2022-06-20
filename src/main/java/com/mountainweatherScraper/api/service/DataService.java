@@ -5,7 +5,6 @@ import com.mountainweatherScraper.api.entities.MountainRange;
 import com.mountainweatherScraper.api.entities.SubRange;
 import com.mountainweatherScraper.api.repository.MountainPeakRepository;
 import com.mountainweatherScraper.api.repository.MountainRangeRepository;
-import com.mountainweatherScraper.api.repository.ReportRepository;
 import com.mountainweatherScraper.api.repository.SubRangeRepository;
 import com.mountainweatherScraper.api.webscraper.DataScraper;
 import lombok.NoArgsConstructor;
@@ -19,6 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -40,13 +40,11 @@ public class DataService {
     public DataService(DataScraper ds,
                        MountainPeakRepository peakRepo,
                        MountainRangeRepository rangeRepo,
-                       SubRangeRepository subRangeRepo,
-                       ReportRepository reportRepo) {
+                       SubRangeRepository subRangeRepo) {
         this.ds = ds;
         this.peakRepo = peakRepo;
         this.rangeRepo = rangeRepo;
         this.subRangeRepo = subRangeRepo;
-        this.reportRepo = reportRepo;
     }
 
     final private String baseUrl = "https://www.mountain-forecast.com";
@@ -54,7 +52,6 @@ public class DataService {
     MountainPeakRepository peakRepo;
     MountainRangeRepository rangeRepo;
     SubRangeRepository subRangeRepo;
-    ReportRepository reportRepo;
 
     //initialize DB with all range and peak information
     @Bean
@@ -71,7 +68,6 @@ public class DataService {
                     getAllSubRanges(value),
                     getAllPeaksInRange(value))));
         }
-
 
     private Set<MountainPeak> getAllPeaksInRange(String uri) {
 
@@ -209,7 +205,6 @@ public class DataService {
                     .select("td.forecast__table-relative")
                     .select("span.snow");
             dataList.add(collectToList(snowFallElements.iterator()));
-
             //get rainfall
             Elements rainFallElements = doc.getElementsByClass(rainFallRow)
                     .select("td.forecast__table-relative")

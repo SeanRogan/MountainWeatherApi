@@ -122,7 +122,7 @@
 			<artifactId>gson</artifactId>
 			<version>2.9.0</version>
 		</dependency>
-		<!--Security dependencies-->
+		<!--Security dependencies
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
@@ -132,6 +132,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		-->
 	</dependencies>
 	<build>
 		<plugins>

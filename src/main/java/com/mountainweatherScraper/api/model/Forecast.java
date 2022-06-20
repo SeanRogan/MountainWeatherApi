@@ -1,6 +1,5 @@
 package com.mountainweatherScraper.api.model;
 
-import com.mountainweatherScraper.api.entities.Report;
 import lombok.Data;
 
 import java.io.Serializable;

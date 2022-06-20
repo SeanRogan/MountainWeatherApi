@@ -1,6 +1,6 @@
 
 
-package com.mountainweatherScraper.api.entities;
+package com.mountainweatherScraper.api.model;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 
-@Entity
 public class Report implements Serializable {
 
         public Report() {}
@@ -34,8 +33,7 @@ public class Report implements Serializable {
                       this.weatherConditions = weatherConditions;
                       this.windConditions = windConditions;
               }
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+
         private Long weatherReportId;
         private Long peakId;
         private Long rangeId;

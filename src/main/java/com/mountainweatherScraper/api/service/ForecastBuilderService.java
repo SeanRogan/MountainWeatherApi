@@ -1,7 +1,7 @@
 package com.mountainweatherScraper.api.service;
 
 import com.google.gson.Gson;
-import com.mountainweatherScraper.api.entities.Report;
+import com.mountainweatherScraper.api.model.Report;
 import com.mountainweatherScraper.api.model.Forecast;
 import com.mountainweatherScraper.api.repository.MountainPeakRepository;
 import org.slf4j.Logger;

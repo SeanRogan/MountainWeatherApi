@@ -94,7 +94,7 @@ public class DataService {
         }
         //create a set to store the scraped document of each subrange page
         Set<Document> subRangePages = new HashSet<>();
-        //loop through the link set of subranges
+        //loop through the link set of sub-ranges
         for(String s : setOfSubRangeLinks) {
             //scrape the link
             Document currentDoc = ds.scrapeDocument(s);

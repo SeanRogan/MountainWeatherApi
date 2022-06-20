@@ -23,7 +23,7 @@ public class ReportsController {
 
     private static final Logger logger = LoggerFactory.getLogger(ReportsController.class);
     @Autowired
-    public void setService(ForecastBuilderService service) {
+    public void setForecastBuilderService(ForecastBuilderService service) {
         this.service = service;
     }
     ForecastBuilderService service;

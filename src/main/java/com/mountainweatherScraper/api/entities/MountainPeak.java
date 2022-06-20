@@ -1,11 +1,19 @@
 package com.mountainweatherScraper.api.entities;
 
 
-import lombok.*;
-import org.hibernate.Hibernate;
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity(name="mountain_peak")
 @Getter

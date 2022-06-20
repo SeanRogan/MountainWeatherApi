@@ -2,13 +2,6 @@
 
 package com.mountainweatherScraper.api.model;
 
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.io.Serializable;
 
 public class Report implements Serializable {

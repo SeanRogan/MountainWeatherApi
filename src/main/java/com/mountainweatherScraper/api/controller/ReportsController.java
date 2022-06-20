@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-
+/**
+ * ReportsController is a controller class. it handles requests for a weather forecast to be returned.
+ */
 @Controller
 @RequestMapping("/report")
 public class ReportsController {
@@ -25,12 +27,20 @@ public class ReportsController {
         this.service = service;
     }
     ForecastBuilderService service;
+
+    /**
+     *
+     *
+     */
     @GetMapping(value = "/daily/{mountainId}")
     public ResponseEntity<String> getDailyReportByMountain(HttpServletRequest request, @PathVariable Long mountainId) {
         logger.info("creating one day weather forecast for " + mountainId);
         return service.createWeatherReportResponse(mountainId, 1);
-
     }
+
+    /**
+     *
+     */
     @GetMapping("/extended/{mountainId}")
     public ResponseEntity<String> getSixDayForecastByMountain(@PathVariable Long mountainId) {
         logger.info("creating six day weather forecast for " + mountainId);

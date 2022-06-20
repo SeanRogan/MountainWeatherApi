@@ -24,7 +24,9 @@ public class RequestHandlerService {
         this.request = request;
     }
 
-
+    /**
+     *
+     */
     public ResponseEntity<String> authorize() {
         String requestHeaders = request.getHeader("Authorization");
         ResponseEntity<String> error = new ResponseEntity<>("error : \"access denied\"", HttpStatus.UNAUTHORIZED);

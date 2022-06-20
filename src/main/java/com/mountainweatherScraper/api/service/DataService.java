@@ -35,7 +35,9 @@ import java.util.Set;
 @NoArgsConstructor
 @Service
 public class DataService {
-
+    /**
+     *
+     */
     private static final Logger logger = LoggerFactory.getLogger(DataService.class);
 
     @Autowired
@@ -54,7 +56,9 @@ public class DataService {
     MountainPeakRepository peakRepo;
     MountainRangeRepository rangeRepo;
     SubRangeRepository subRangeRepo;
-
+    /**
+     *
+     */
     //initialize DB with all range and peak information
     @Bean
     //initialize DB with all range and peak information
@@ -73,7 +77,9 @@ public class DataService {
                     getAllPeaksInRange(value)));
         });
     }
-
+    /**
+     *
+     */
     private Set<MountainPeak> getAllPeaksInRange(String uri) {
 
         String url = baseUrl + uri;
@@ -108,7 +114,9 @@ public class DataService {
         }
         return peaks;
     }
-
+    /**
+     *
+     */
     public Set<SubRange> getAllSubRanges(String uri) {
         String url = baseUrl + uri;
         Set<SubRange> subRanges = new HashSet<>();
@@ -121,7 +129,9 @@ public class DataService {
         }
         return subRanges;
     }
-
+    /**
+     *
+     */
     public HashMap<String,String> getAllMajorMountainRangeUrls() {
         HashMap<String,String> rangeUrls = new HashMap<>();
         String uri = baseUrl + "/mountain_ranges";
@@ -136,7 +146,9 @@ public class DataService {
         }
         return rangeUrls;
     }
-
+    /**
+     *
+     */
     public HashMap<String,String> getAllMountainPeakUrls() {
         //listOfPeakUrls is a Hashmap of mountain peak names(key) and their corresponding uri (value)
         HashMap<String,String> listOfPeakUrls = new HashMap<>();

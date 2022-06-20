@@ -15,6 +15,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+/**
+ *
+ */
 @Service
 public class ForecastBuilderService{
 
@@ -37,6 +41,9 @@ public class ForecastBuilderService{
 
     public ForecastBuilderService() {
     }
+    /**
+     *
+     */
     public ResponseEntity<String> createWeatherReportResponse(Long peakId, int numberOfDays) {
         Gson g = new Gson();
         var weatherForecast = buildListOfForecasts(peakId, dataService.getWeatherData(
@@ -52,7 +59,9 @@ public class ForecastBuilderService{
         return response;
 
     }
-
+    /**
+     *
+     */
     public Forecast buildForecast(Long peakId, List<List<String>> weatherData , int num) {
         //max temps, min, chill, snow, rain weather, wind
         List<String> maxTemps = weatherData.get(0);
@@ -96,7 +105,9 @@ public class ForecastBuilderService{
         return new Forecast(amReport,pmReport,nightReport);
 
     }
-
+    /**
+     *
+     */
     List<Forecast> buildListOfForecasts(Long peakId, List<List<String>> weatherData, int day) {
         List<Forecast> forecastList = new ArrayList<>();
 

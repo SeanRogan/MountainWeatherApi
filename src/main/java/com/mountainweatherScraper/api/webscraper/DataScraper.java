@@ -8,10 +8,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+/**
+ *
+ */
 @Component
 @NoArgsConstructor
 public class DataScraper {
     private static final Logger logger = LoggerFactory.getLogger(DataScraper.class);
+    /**
+     *
+     */
     public Document scrapeDocument(String uri) {
         try {
             return Jsoup.connect(uri).get();

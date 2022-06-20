@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -19,12 +20,15 @@ public class MountainRange implements Serializable {
     @Id //for primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "range_id")
+    @NotNull
     private Long rangeId;
 
     @Column(name = "range_name")
+    @NotNull
     private String rangeName;
 
     @Column(name = "uri")
+    @NotNull
     private String uri;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "subrangeId")

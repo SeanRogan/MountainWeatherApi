@@ -44,6 +44,8 @@ public class ForecastBuilderService{
     /**
      *
      */
+
+    //todo i think this method should logically go in its own class, a ResponseBuilderService class.
     public ResponseEntity<String> createWeatherReportResponse(Long peakId, int numberOfDays) {
         Gson g = new Gson();
         var weatherForecast = buildListOfForecasts(peakId, dataService.getWeatherData(

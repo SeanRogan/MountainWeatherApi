@@ -85,6 +85,7 @@
 		</dependency>
 		<!-- SLF4j -->
 		<dependency>
+			<!--exclude the default logback mapping so Log4j is prioritized-->
 			<exclusions>
 				<exclusion>
 					<artifactId>logback-classic</artifactId>

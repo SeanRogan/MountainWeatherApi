@@ -27,13 +27,11 @@ public class MountainPeak implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    @NotNull
     private Long peakId;
     @Column
-    @NotNull
+
     private String peakName;
     @Column
-    @NotNull
     private String homeSubrangeUri;
     @Column
     private Long rangeId;
@@ -42,7 +40,6 @@ public class MountainPeak implements Serializable {
     @ManyToOne
     private MountainRange homeRange;
     @Column
-    @NotNull
     private String uri;
     public MountainPeak(String peakName, String uri, String subRangeUri) {
         this.peakName = peakName;

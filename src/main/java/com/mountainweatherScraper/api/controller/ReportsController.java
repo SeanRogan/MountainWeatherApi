@@ -29,6 +29,10 @@ public class ReportsController {
     ForecastBuilderService service;
 
     /**
+     * @param request The HttpServlet Request recieved by the controller
+     *
+     * @param mountainId the Mountain Peak Id number
+     *
      *
      *
      */

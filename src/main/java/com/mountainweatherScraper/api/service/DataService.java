@@ -57,7 +57,9 @@ public class DataService {
     MountainRangeRepository rangeRepo;
     SubRangeRepository subRangeRepo;
     /**
-     *
+     * collects all major mountain range name/uri info to a Map,
+     * then loops through the map to create a new entity in the MySQL database for each major range,
+     * along with their associated subranges, and all the mountain peaks associates with that mountain range.
      */
     //initialize DB with all range and peak information
     @Bean
@@ -78,7 +80,7 @@ public class DataService {
         });
     }
     /**
-     *
+     * @param uri - the uri of the subrange
      */
     private Set<MountainPeak> getAllPeaksInRange(String uri) {
 
@@ -115,7 +117,9 @@ public class DataService {
         return peaks;
     }
     /**
+     * @param uri the uri of the Major Range to be searched for sub-ranges.
      *
+     * @return Set<Subrange> subRanges - returns a set of Subrange objects associates with the Major Range
      */
     public Set<SubRange> getAllSubRanges(String uri) {
         String url = baseUrl + uri;
@@ -130,7 +134,7 @@ public class DataService {
         return subRanges;
     }
     /**
-     *
+     * @return HashMap<String,String> listOfPeakUrls -  returns a Hashmap<String,String> of Mountain Range names with their associated URL
      */
     public HashMap<String,String> getAllMajorMountainRangeUrls() {
         HashMap<String,String> rangeUrls = new HashMap<>();
@@ -145,37 +149,6 @@ public class DataService {
             //e.remove();
         }
         return rangeUrls;
-    }
-    /**
-     *
-     */
-    public HashMap<String,String> getAllMountainPeakUrls() {
-        //listOfPeakUrls is a Hashmap of mountain peak names(key) and their corresponding uri (value)
-        HashMap<String,String> listOfPeakUrls = new HashMap<>();
-        //document map contains the pages a-z containing
-        // all the links of all mountain peaks (over 1000ft) in the USA
-        Map<Character, Document> documentMap = new HashMap<>();
-        //iterating through the integer values 65-90 which will be cast to A-Z characters
-        // via their ascii values. then using the characters to fill in the variable in the uri.
-        for(int i = 65; i <= 90; i++ ) {
-            //num converted to capital Letter char
-            char c = (char)i;
-            //uri of
-            String uri = String.format(baseUrl + "/countries/United-States/locations/%c" , c);
-            documentMap.put(c, ds.scrapeDocument(uri));
-        }
-
-        for (Document current : documentMap.values()) {
-            Elements elements = current.getElementsByClass("b-list-table__item").select("a");
-            for (Element currentElement : elements) {
-                listOfPeakUrls.put(currentElement.text(),
-                        currentElement
-                                .select("a[href]")
-                                .attr("href"));
-
-            }
-        }
-        return listOfPeakUrls;
     }
 
     /**

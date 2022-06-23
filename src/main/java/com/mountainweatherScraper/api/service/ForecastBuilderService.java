@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,17 +47,22 @@ public class ForecastBuilderService{
      */
 
     //todo i think this method should logically go in its own class, a ResponseBuilderService class.
-    public ResponseEntity<String> createWeatherReportResponse(Long peakId, int numberOfDays) {
+    public ResponseEntity<String> createWeatherReportResponse(Long peakId, int numberOfDays, HttpServletRequest request) {
         Gson g = new Gson();
-        var weatherForecast = buildListOfForecasts(peakId, dataService.getWeatherData(
-                peakRepo.getPeakUriByPeakId(peakId)), numberOfDays);
+        request.getHeader("Temp-format");
+        List<Forecast> weatherForecast = buildListOfForecasts(peakId,
+                dataService
+                        .getWeatherData(peakRepo
+                                        .getPeakUriByPeakId(peakId),
+                                request.getHeader("Temp-format")),
+                numberOfDays);
 
         HttpStatus status = HttpStatus.OK;
         HttpHeaders headers = new HttpHeaders();
         //set headers
-        String body = g.toJson(weatherForecast);
+        String responseBody = g.toJson(weatherForecast);
         ResponseEntity<String> response;
-        response = new ResponseEntity<>(body, headers, status);
+        response = new ResponseEntity<>(responseBody, headers, status);
         logger.info("created responseEntity : \n" + response +"\n");
         return response;
 
@@ -114,7 +120,7 @@ public class ForecastBuilderService{
         List<Forecast> forecastList = new ArrayList<>();
 
         for(int n = 0; n < day; n++) {
-            forecastList.add(buildForecast(peakId,weatherData,n));
+            forecastList.add(buildForecast(peakId, weatherData, n));
         }
         return forecastList;
     }

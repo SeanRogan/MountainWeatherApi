@@ -39,15 +39,15 @@ public class ReportsController {
     @GetMapping(value = "/daily/{mountainId}")
     public ResponseEntity<String> getDailyReportByMountain(HttpServletRequest request, @PathVariable Long mountainId) {
         logger.info("creating one day weather forecast for " + mountainId);
-        return service.createWeatherReportResponse(mountainId, 1);
+        return service.createWeatherReportResponse(mountainId, 1, request);
     }
 
     /**
      *
      */
     @GetMapping("/extended/{mountainId}")
-    public ResponseEntity<String> getSixDayForecastByMountain(@PathVariable Long mountainId) {
+    public ResponseEntity<String> getSixDayForecastByMountain(HttpServletRequest request, @PathVariable Long mountainId) {
         logger.info("creating six day weather forecast for " + mountainId);
-        return service.createWeatherReportResponse(mountainId, 6);
+        return service.createWeatherReportResponse(mountainId, 6, request);
     }
 }

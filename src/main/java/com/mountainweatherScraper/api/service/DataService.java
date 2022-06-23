@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -160,7 +161,9 @@ public class DataService {
      * and windchill temps, along with wind and weather conditions
      * and rainfall snowfall estimates
      */
-    public List<List<String>> getWeatherData(String uri) {
+    public List<List<String>> getWeatherData(String uri , String tempFormat) {
+
+
         List<List<String>> dataList = new ArrayList<>();
         String weatherConditionsRow = "forecast__table-summary";
         String maxTempRow = "forecast__table-max-temperature";
@@ -188,6 +191,8 @@ public class DataService {
             Elements windChillElements = doc.getElementsByClass(windChillRow)
                     .select("span.temp");
             dataList.add(collectToList(windChillElements.iterator()));
+
+
 
             //get snowfall
             Elements snowFallElements = doc.getElementsByClass(snowFallRow)

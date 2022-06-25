@@ -234,7 +234,7 @@ public class DataService {
 
     private List<String> convertTempsToImperial(List<String> temps) {
         List<String> convertedTemps = new ArrayList<>();
-        temps.stream().forEach(i -> {
+        temps.forEach(i -> {
             double n = Double.parseDouble(i);
             n = n * 1.8 + 32;
             convertedTemps.add(Double.toString(n));

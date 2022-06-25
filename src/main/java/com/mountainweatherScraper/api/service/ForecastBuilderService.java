@@ -49,13 +49,12 @@ public class ForecastBuilderService{
     //todo i think this method should logically go in its own class, a ResponseBuilderService class.
     public ResponseEntity<String> createWeatherReportResponse(Long peakId, int numberOfDays, HttpServletRequest request) {
         Gson g = new Gson();
-        request.getHeader("Temp-format");
         List<Forecast> weatherForecast = buildListOfForecasts(peakId,
                 dataService
                         .getWeatherData(peakRepo
-                                        .getPeakUriByPeakId(peakId),
+                                .getPeakUriByPeakId(peakId),
                                 request.getHeader("Temp-format")),
-                numberOfDays);
+                                numberOfDays);
 
         HttpStatus status = HttpStatus.OK;
         HttpHeaders headers = new HttpHeaders();

@@ -22,9 +22,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 /**
@@ -36,9 +35,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Service
 public class DataService {
-    /**
-     *
-     */
     private static final Logger logger = LoggerFactory.getLogger(DataService.class);
 
     @Autowired
@@ -58,7 +54,7 @@ public class DataService {
     MountainRangeRepository rangeRepo;
     SubRangeRepository subRangeRepo;
     /**
-     * collects all major mountain range name/uri info to a Map,
+     * the init method initialized the Database : it connects to the website, collects all major mountain range name/uri info to a Map,
      * then loops through the map to create a new entity in the MySQL database for each major range,
      * along with their associated subranges, and all the mountain peaks associates with that mountain range.
      */
@@ -156,15 +152,21 @@ public class DataService {
      * @param uri the uri of the specific mountain peak with which the weather data is associated.
      *
      * @return List<String[]> dataList - returns a list of string arrays,
-     * each array containing all values of one category,
-     * catagories being the high temperature, low temperature,
-     * and windchill temps, along with wind and weather conditions
-     * and rainfall snowfall estimates
+     * each array containing all the values of one of 7 categories,
+     * categories being the high temperatures, low temperatures,
+     * and windchill temps, along with wind conditions, weather summary,
+     * and rainfall / snowfall estimates.
+     *
+     *
+     * The getWeatherData method collects the weather data needed for a Report object response.
+     *  if the request was sent with http headers Temp-format : F,
+     *  the temperature values will be converted to imperial units
+     *  via the National Institute of Standards and Technology formula : °F = (°C × 1.8) + 32
      */
     public List<List<String>> getWeatherData(String uri , String tempFormat) {
 
 
-        List<List<String>> dataList = new ArrayList<>();
+        List<List<String>> dataList = new ArrayList<>(7);
         String weatherConditionsRow = "forecast__table-summary";
         String maxTempRow = "forecast__table-max-temperature";
         String minTempRow = "forecast__table-min-temperature";
@@ -180,44 +182,66 @@ public class DataService {
             //get high temps
             Elements maxTempElements = doc.getElementsByClass(maxTempRow)
                     .select("span.temp");
-            dataList.add(collectToList(maxTempElements.iterator()));
+            dataList.add(0,collectToList(maxTempElements.iterator()));
 
             //get low temps
             Elements minTempElements = doc.getElementsByClass(minTempRow)
                     .select("span.temp");
-            dataList.add(collectToList(minTempElements.iterator()));
+            dataList.add(1,collectToList(minTempElements.iterator()));
 
             //get windchill temps
             Elements windChillElements = doc.getElementsByClass(windChillRow)
                     .select("span.temp");
-            dataList.add(collectToList(windChillElements.iterator()));
-
+            dataList.add(2,collectToList(windChillElements.iterator()));
+            if(tempFormat.equals("F")){
+                logger.info("converting temperature values to Imperial Units");
+                List<String> convertedMax =  convertTempsToImperial(dataList.get(0));
+                dataList.remove(0);
+                dataList.add(0, convertedMax);
+                List<String> convertedMin =  convertTempsToImperial(dataList.get(1));
+                dataList.remove(1);
+                dataList.add(1, convertedMin);
+                List<String> convertedWindChill =  convertTempsToImperial(dataList.get(2));
+                dataList.remove(2);
+                dataList.add(2, convertedWindChill);
+            }
 
 
             //get snowfall
             Elements snowFallElements = doc.getElementsByClass(snowFallRow)
                     .select("td.forecast__table-relative")
                     .select("span.snow");
-            dataList.add(collectToList(snowFallElements.iterator()));
+            dataList.add(3, collectToList(snowFallElements.iterator()));
             //get rainfall
             Elements rainFallElements = doc.getElementsByClass(rainFallRow)
                     .select("td.forecast__table-relative")
                     .select("span.rain");
-            dataList.add(collectToList(rainFallElements.iterator()));
+            dataList.add(4, collectToList(rainFallElements.iterator()));
 
             //get weather elements
             Elements weatherConditionElements = doc.getElementsByClass(weatherConditionsRow)
                     .select("td");
-            dataList.add(collectToList(weatherConditionElements.iterator()));
+            dataList.add(5, collectToList(weatherConditionElements.iterator()));
 
             //get wind elements
             Elements windElements = doc.getElementsByClass(windRow)
                     .select("tr.forecast__table-wind");
-            dataList.add(getWindConditions(windElements.select("td.iconcell").iterator()));
+            dataList.add(6, getWindConditions(windElements.select("td.iconcell").iterator()));
         }
 
         return dataList;
     }
+
+    private List<String> convertTempsToImperial(List<String> temps) {
+        List<String> convertedTemps = new ArrayList<>();
+        temps.stream().forEach(i -> {
+            double n = Double.parseDouble(i);
+            n = n * 1.8 + 32;
+            convertedTemps.add(Double.toString(n));
+        });
+        return convertedTemps;
+    }
+
     private List<String> collectToList(Iterator<Element> itr) {
         List<String> result = new ArrayList<>();
 

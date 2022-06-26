@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.mountainweatherScraper</groupId>
-	<artifactId>peak-conditions-api</artifactId>
+	<artifactId>api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Mountain Weather Scraper API</name>
 	<description>A REST Api controlling a webscraper which collects and processes mountain weather data.</description>

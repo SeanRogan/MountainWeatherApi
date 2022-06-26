@@ -149,6 +149,7 @@
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>3.0.1</version>
 				<executions>
+					<!--this is for heroku deployment-->
 					<execution>
 						<id>copy-dependencies</id>
 						<phase>package</phase>

@@ -193,44 +193,46 @@ public class DataService {
             Elements windChillElements = doc.getElementsByClass(windChillRow)
                     .select("span.temp");
             dataList.add(2,collectToList(windChillElements.iterator()));
-            if(tempFormat.equals("F")){
-                logger.info("converting temperature values to Imperial Units");
-                List<String> convertedMax =  convertTempsToImperial(dataList.get(0));
-                dataList.remove(0);
-                dataList.add(0, convertedMax);
-                List<String> convertedMin =  convertTempsToImperial(dataList.get(1));
-                dataList.remove(1);
-                dataList.add(1, convertedMin);
-                List<String> convertedWindChill =  convertTempsToImperial(dataList.get(2));
-                dataList.remove(2);
-                dataList.add(2, convertedWindChill);
-            }
-
-
-            //get snowfall
-            Elements snowFallElements = doc.getElementsByClass(snowFallRow)
-                    .select("td.forecast__table-relative")
-                    .select("span.snow");
-            dataList.add(3, collectToList(snowFallElements.iterator()));
-            //get rainfall
-            Elements rainFallElements = doc.getElementsByClass(rainFallRow)
-                    .select("td.forecast__table-relative")
-                    .select("span.rain");
-            dataList.add(4, collectToList(rainFallElements.iterator()));
-
-            //get weather elements
-            Elements weatherConditionElements = doc.getElementsByClass(weatherConditionsRow)
-                    .select("td");
-            dataList.add(5, collectToList(weatherConditionElements.iterator()));
-
-            //get wind elements
-            Elements windElements = doc.getElementsByClass(windRow)
-                    .select("tr.forecast__table-wind");
-            dataList.add(6, getWindConditions(windElements.select("td.iconcell").iterator()));
+            try{
+                    if(tempFormat.equals("F")){
+                        logger.info("converting temperature values to Imperial Units");
+                        List<String> convertedMax =  convertTempsToImperial(dataList.get(0));
+                        dataList.remove(0);
+                        dataList.add(0, convertedMax);
+                        List<String> convertedMin =  convertTempsToImperial(dataList.get(1));
+                        dataList.remove(1);
+                        dataList.add(1, convertedMin);
+                        List<String> convertedWindChill =  convertTempsToImperial(dataList.get(2));
+                        dataList.remove(2);
+                        dataList.add(2, convertedWindChill);
+                    }
+                } catch(NullPointerException e) {
+                logger.error(e.getMessage(), "Null pointer exception thrown - required header 'Temp-format' not provided");
         }
+        //get snowfall
+        Elements snowFallElements = doc.getElementsByClass(snowFallRow)
+                .select("td.forecast__table-relative")
+                .select("span.snow");
+        dataList.add(3, collectToList(snowFallElements.iterator()));
+        //get rainfall
+        Elements rainFallElements = doc.getElementsByClass(rainFallRow)
+                .select("td.forecast__table-relative")
+                .select("span.rain");
+        dataList.add(4, collectToList(rainFallElements.iterator()));
+
+        //get weather elements
+        Elements weatherConditionElements = doc.getElementsByClass(weatherConditionsRow)
+                .select("td");
+        dataList.add(5, collectToList(weatherConditionElements.iterator()));
+
+        //get wind elements
+        Elements windElements = doc.getElementsByClass(windRow)
+                .select("tr.forecast__table-wind");
+        dataList.add(6, getWindConditions(windElements.select("td.iconcell").iterator()));
+    }
 
         return dataList;
-    }
+}
 
     private List<String> convertTempsToImperial(List<String> temps) {
         List<String> convertedTemps = new ArrayList<>();

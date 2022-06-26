@@ -23,7 +23,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 
 /**
@@ -193,20 +192,22 @@ public class DataService {
             Elements windChillElements = doc.getElementsByClass(windChillRow)
                     .select("span.temp");
             dataList.add(2,collectToList(windChillElements.iterator()));
-            if(tempFormat.equals("F")){
-                logger.info("converting temperature values to Imperial Units");
-                List<String> convertedMax =  convertTempsToImperial(dataList.get(0));
-                dataList.remove(0);
-                dataList.add(0, convertedMax);
-                List<String> convertedMin =  convertTempsToImperial(dataList.get(1));
-                dataList.remove(1);
-                dataList.add(1, convertedMin);
-                List<String> convertedWindChill =  convertTempsToImperial(dataList.get(2));
-                dataList.remove(2);
-                dataList.add(2, convertedWindChill);
-            }
-
-
+                try{
+                    if(tempFormat.equals("F")){
+                        logger.info("converting temperature values to Imperial Units");
+                        List<String> convertedMax =  convertTempsToImperial(dataList.get(0));
+                        dataList.remove(0);
+                        dataList.add(0, convertedMax);
+                        List<String> convertedMin =  convertTempsToImperial(dataList.get(1));
+                        dataList.remove(1);
+                        dataList.add(1, convertedMin);
+                        List<String> convertedWindChill =  convertTempsToImperial(dataList.get(2));
+                        dataList.remove(2);
+                        dataList.add(2, convertedWindChill);
+                    }
+                } catch (NullPointerException e) {
+                    logger.warn(e.getMessage() + ": \n A NullPointer Exception was thrown because there was no valid Temp-format header value provided");
+                }
             //get snowfall
             Elements snowFallElements = doc.getElementsByClass(snowFallRow)
                     .select("td.forecast__table-relative")

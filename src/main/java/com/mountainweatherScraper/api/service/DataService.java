@@ -57,9 +57,6 @@ public class DataService {
      * then loops through the map to create a new entity in the MySQL database for each major range,
      * along with their associated subranges, and all the mountain peaks associates with that mountain range.
      */
-    //initialize DB with all range and peak information
-    @Bean
-    //initialize DB with all range and peak information
     public void init() {
         logger.info("Collecting Data to populate DB with mountain ranges, sub ranges, and mountain peaks.");
         //get all mountain ranges, key = name of range, value = range URI

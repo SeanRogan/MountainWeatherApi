@@ -1,4 +1,9 @@
 # Mountain Weather Api
-This API is the backbone of the Peak Conditions Weather App.
-A REST Api controlling a webscraper collects and processes mountain weather data, 
-the API can be queried for weather reports.
+A REST Api controlling a webscraper that collects and processes mountain weather data, 
+the API can be queried for daily or extended 6-day weather reports, for over 10000 mountain peaks across the world.
+
+# The api homepage, deployed on heroku
+## https://peak-conditions-api.herokuapp.com/
+
+## and check out the Rapid Api Hub
+## https://rapidapi.com/SeanRogan/api/peak-conditions/

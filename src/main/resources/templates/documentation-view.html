@@ -1,0 +1,169 @@
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+          crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users Demo</title>
+
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<div class="container">
+    <h1>Peak Conditions API Documentation</h1>
+    <h2>
+
+    </h2>
+    <h3>
+        Local weather reports are not accurate enough for climbing mountains.<br>Get Json formatted weather forecasts for the summit of over 10,000 mountains around the world.
+    </h3>
+    <p>API DOCUMENTATION
+
+        REQUESTS
+
+        endpoint:
+        /report/daily/{mountain id}
+
+        GET
+        get one day forecast by mountain id
+
+        Parameter
+
+        'peak id' String - required : the id String of the peak
+
+        Header
+
+        'Temp-format' - required : specifies the temperature unit format for weather reports. options are F or C,
+        for Imperial/Fahrenheit units or Metric/Celsius units respectively.
+
+        sample responses:
+
+                [1 item
+                    0:{1 item
+                        "forecastData":{3 items
+                            "Night":{8 items
+                            "peakId":1123
+                            "maxTemp":"59.0"
+                            "minTemp":"57.2"
+                            "windChill":"59.0"
+                            "expectedRainfall":0
+                            "expectedSnowfall":0
+                            "weatherConditions":"clear"
+                            "windConditions":"Wind Conditions: 15 S"
+                            }
+                        "AM":{8 items
+                            "peakId":1123
+                            "maxTemp":"59.0"
+                            "minTemp":"53.6"
+                            "windChill":"55.4"
+                            "expectedRainfall":0
+                            "expectedSnowfall":0
+                            "weatherConditions":"clear"
+                            "windConditions":"Wind Conditions: 20 W"
+                            }
+                        "PM":{8 items
+                            "peakId":1123
+                            "maxTemp":"62.6"
+                            "minTemp":"62.6"
+                            "windChill":"60.8"
+                            "expectedRainfall":0
+                            "expectedSnowfall":0
+                            "weatherConditions":"clear"
+                            "windConditions":"Wind Conditions: 25 W"
+                            }
+                    }
+                }
+        ]
+
+        endpoint:
+        /report/extended/{mountain id}
+
+        GET
+        get extended six day forecast by mountain id
+
+        Parameter
+
+        'peak id' String - required : the id String of the peak
+
+        Header
+
+        'Temp-format' - required : specifies the temperature unit format for weather reports. options are F or C,
+        for Imperial/Fahrenheit units or Metric/Celsius units respectively.
+
+        sample responses:
+                [6 items
+                    0:{1 item
+                        "forecastData":{3 items
+                            "Night":{8 items
+                            "peakId":3
+                            "maxTemp":"-18"
+                            "minTemp":"-19"
+                            "windChill":"-18"
+                            "expectedRainfall":0
+                            "expectedSnowfall":0
+                            "weatherConditions":"cloudy"
+                            "windConditions":"Wind Conditions: 5 SW"
+                            }
+                        "AM":{8 items
+                            "peakId":3
+                            "maxTemp":"-13"
+                            "minTemp":"-15"
+                            "windChill":"-25"
+                            "expectedRainfall":0
+                            "expectedSnowfall":1
+                            "weatherConditions":"light snow"
+                            "windConditions":"Wind Conditions: 30 E"
+                            }
+                        "PM":{8 items
+                            "peakId":3
+                            "maxTemp":"-16"
+                            "minTemp":"-17"
+                            "windChill":"-23"
+                            "expectedRainfall":0
+                            "expectedSnowfall":0
+                            "weatherConditions":"cloudy"
+                            "windConditions":"Wind Conditions: 0 S"
+                            }
+                    }
+                    }
+                1:{1 item
+                "forecastData":{...}3 items
+                }
+                2:{1 item
+                "forecastData":{...}3 items
+                }
+                3:{1 item
+                "forecastData":{...}3 items
+                }
+                4:{1 item
+                "forecastData":{...}3 items
+                }
+                5:{1 item
+                "forecastData":{...}3 items
+                }
+                ]
+
+
+        endpoint:
+        /search
+        GET
+
+        Query
+
+        'q' String - required :
+
+        the search query
+
+        'type' String - required :
+
+        what type of resource are you searching for, a mountain peak or mountain range/subrange.
+
+        sample response:
+
+    </p>
+</div>
+</body>
+</html>

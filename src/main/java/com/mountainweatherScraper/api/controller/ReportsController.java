@@ -29,12 +29,11 @@ public class ReportsController {
     ForecastBuilderService service;
 
     /**
-     * @param request The HttpServlet Request recieved by the controller
+     * @param request The HttpServlet Request received by the controller
      *
      * @param mountainId the Mountain Peak Id number
      *
-     *
-     *
+     * @return ResponseEntity<String> returns a daily weather report in the format of a Json object
      */
     @GetMapping(value = "/daily/{mountainId}")
     public ResponseEntity<String> getDailyReportByMountain(HttpServletRequest request, @PathVariable Long mountainId) {
@@ -43,7 +42,11 @@ public class ReportsController {
     }
 
     /**
+     * @param request The HttpServlet Request received by the controller
      *
+     * @param mountainId the Mountain Peak Id number
+     *
+     * @return ResponseEntity<String> returns a six day weather report in the format of a Json object
      */
     @GetMapping("/extended/{mountainId}")
     public ResponseEntity<String> getSixDayForecastByMountain(HttpServletRequest request, @PathVariable Long mountainId) {

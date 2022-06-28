@@ -265,6 +265,7 @@ public class DataService {
     }
 
     public void clean() {
+        logger.info("cleaning database of duplicates");
         rangeRepo.deleteDuplicateMountainRange();
         subRangeRepo.deleteDuplicateSubRanges();
         peakRepo.deleteDuplicateMountainPeaks();

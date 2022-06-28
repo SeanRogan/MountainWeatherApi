@@ -14,7 +14,6 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -66,11 +65,13 @@ public class DataService {
         // creation of all peaks and sub range entities.
         mountainRangeUriMap.forEach((key, value) ->{
             logger.trace("Creating Mountain Range Entity in Database: "+ key);
+            if(rangeRepo.findIfRangeExists(value,key)){
             rangeRepo.save(new MountainRange(key,
                     baseUrl + value,
                     getAllSubRanges(value),
                     getAllPeaksInRange(value)));
-        });
+        }});
+        logger.info("Data collection is complete!");
     }
     /**
      * @param uri - the uri of the subrange
@@ -266,9 +267,6 @@ public class DataService {
 
     public void clean() {
         logger.info("cleaning database of duplicates");
-        rangeRepo.deleteDuplicateMountainRange();
-        subRangeRepo.deleteDuplicateSubRanges();
-        peakRepo.deleteDuplicateMountainPeaks();
-
+        //dont know how to build this but its needed.
     }
 }

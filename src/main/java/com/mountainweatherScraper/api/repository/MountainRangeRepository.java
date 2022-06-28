@@ -11,12 +11,12 @@ import java.util.Map;
 @Repository
 public interface MountainRangeRepository extends JpaRepository<MountainRange, Long> {
 
+
+    @Query("SELECT r FROM sub_ranges r WHERE r.uri = ?1 AND r.rangeName = ?2")
+    Boolean findIfRangeExists(String uri, String rangeName);
     //getAllSubRangesByRangeId
 
     //getAllPeaksInRangeByRangeId
-    @Modifying
-    @Query("DELETE FROM mountain_ranges m where m.rangeId < m.rangeId AND m.uri = m.uri")
-    void deleteDuplicateMountainRange();
 
 
 }

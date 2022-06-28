@@ -18,7 +18,7 @@ public interface SubRangeRepository extends JpaRepository<SubRange, Long> {
     List<Long> getAllPeakIdsInSubRange(Long subRangeId);
         //possibly needed methods
     //getParentRangeOfSubRange
-    //
+
         @Modifying
         @Query("DELETE FROM sub_ranges r where r.subrangeId < r.subrangeId AND r.uri = r.uri")
         void deleteDuplicateSubRanges();

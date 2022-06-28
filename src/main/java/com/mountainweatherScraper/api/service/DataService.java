@@ -263,4 +263,10 @@ public class DataService {
 
         return result;
     }
+
+    public void clean() {
+        rangeRepo.deleteDuplicateMountainRange();
+        subRangeRepo.deleteDuplicateSubRanges();
+        peakRepo.deleteDuplicateMountainPeaks();
+    }
 }

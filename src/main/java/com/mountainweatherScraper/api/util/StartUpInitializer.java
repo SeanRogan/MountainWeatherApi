@@ -24,6 +24,7 @@ public class StartUpInitializer {
         if(event.getState().equals(ReadinessState.ACCEPTING_TRAFFIC)) {
             logger.info("Server is started\nReadinessState: ACCEPTING_TRAFFIC");
             ds.init();
+            ds.clean();
         }
     }
 }

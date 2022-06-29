@@ -19,16 +19,13 @@ import java.util.Set;
 public class SubRange implements Serializable {
     @Id //for primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "subrange_id")
+    @Column(name = "subrange_id",unique=true)
     private Long subrangeId;
-    @Column(name = "home_range_uri")
-
+    @Column(name = "home_range_uri", unique=true)
     private String homeRangeUri;
-    @Column(name = "range_name")
-
+    @Column(name = "range_name", unique=true)
     private String rangeName;
-    @Column(name = "uri")
-
+    @Column(name = "uri", unique=true)
     private String uri;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "peakId")

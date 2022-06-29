@@ -19,14 +19,14 @@ import java.util.Set;
 public class MountainRange implements Serializable {
     @Id //for primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "range_id")
+    @Column(name = "range_id", unique=true)
 
     private Long rangeId;
 
-    @Column(name = "range_name")
+    @Column(name = "range_name", unique=true)
     private String rangeName;
 
-    @Column(name = "uri")
+    @Column(name = "uri", unique=true)
 
     private String uri;
 

@@ -23,10 +23,6 @@ import java.util.List;
 @Service
 public class ForecastBuilderService{
 
-    //todo need a way to handle fahrenheit/celsius conversion.
-    // need to accept a header with a getForecast request specifying F or C,
-    // default to C
-
     private static final Logger logger = LoggerFactory.getLogger(ForecastBuilderService.class);
 
     MountainPeakRepository peakRepo;
@@ -82,7 +78,7 @@ public class ForecastBuilderService{
         Collections.replaceAll(snowForecast, "-","0.0");
         Collections.replaceAll(rainForecast, "-","0.0");
         logger.trace("creating AM report for day" + num);
-        Report amReport = new Report(peakId,
+        Report amReport = new Report(peakRepo.getPeakNameById(peakId),
                 maxTemps.get(num),
                 minTemps.get(num),
                 windChillTemps.get(num),
@@ -91,7 +87,7 @@ public class ForecastBuilderService{
                 weatherSummary.get(num),
                 windCondition.get(num));
         logger.trace("creating PM report for day" + num);
-        Report pmReport = new Report(peakId,
+        Report pmReport = new Report(peakRepo.getPeakNameById(peakId),
                 maxTemps.get(num+1),
                 minTemps.get(num+1),
                 windChillTemps.get(num+1),
@@ -100,7 +96,7 @@ public class ForecastBuilderService{
                 weatherSummary.get(num+1),
                 windCondition.get(num+1));
         logger.trace("creating NIGHT report for day" + num);
-        Report nightReport = new Report(peakId,
+        Report nightReport = new Report(peakRepo.getPeakNameById(peakId),
                 maxTemps.get(num+2),
                 minTemps.get(num+2),
                 windChillTemps.get(num+2),

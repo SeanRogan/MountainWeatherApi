@@ -1,80 +1,65 @@
-
-
 package com.mountainweatherScraper.api.model;
 
 import java.io.Serializable;
 
 public class Report implements Serializable {
+    public Report(
+            String peakName,
+            String maxTemp,
+            String minTemp,
+            String windChill,
+            float expectedSnowfall,
+            float expectedRainfall,
+            String weatherConditions,
+            String windConditions) {
+        this.peakName = peakName;
+        this.maxTemp = maxTemp;
+        this.minTemp = minTemp;
+        this.windChill = windChill;
+        this.expectedSnowfall = expectedSnowfall;
+        this.expectedRainfall = expectedRainfall;
+        this.weatherConditions = weatherConditions;
+        this.windConditions = windConditions;
+    }
 
-        public Report() {}
+    private final String peakName;
+    private final String maxTemp;
+    private final String minTemp;
+    private final String windChill;
+    private final float expectedRainfall;
+    private final float expectedSnowfall;
+    private final String weatherConditions;
+    private final String windConditions;
 
-        public Report(
-              Long peakId,
-              String maxTemp,
-              String minTemp,
-              String windChill,
-              float expectedSnowfall,
-              float expectedRainfall,
-              String weatherConditions,
-              String windConditions) {
-                      this.peakId = peakId;
-                      this.maxTemp = maxTemp;
-                      this.minTemp = minTemp;
-                      this.windChill = windChill;
-                      this.expectedSnowfall = expectedSnowfall;
-                      this.expectedRainfall = expectedRainfall;
-                      this.weatherConditions = weatherConditions;
-                      this.windConditions = windConditions;
-              }
 
-        private Long weatherReportId;
-        private Long peakId;
-        private Long rangeId;
-        private String maxTemp;
-        private String minTemp;
-        private String windChill;
-        private float expectedRainfall;
-        private float expectedSnowfall;
-        private String weatherConditions;
-        private String windConditions;
+    public String getPeakName() {
+        return peakName;
+    }
+    public String getWindConditions() {
+        return windConditions;
+    }
 
-        public String getWindConditions() {
-                return windConditions;
-        }
+    public String getMaxTemp() {
+        return maxTemp;
+    }
 
-        public Long getWeatherReportId() {
-                return weatherReportId;
-        }
+    public String getMinTemp() {
+        return minTemp;
+    }
 
-        public Long getPeakId() {
-                return peakId;
-        }
+    public String getWindChill() {
+        return windChill;
+    }
 
-        public Long getRangeId() {
-                return rangeId;
-        }
+    public float getExpectedRainfall() {
+        return expectedRainfall;
+    }
 
-        public String getMaxTemp() {
-                return maxTemp;
-        }
+    public float getExpectedSnowfall() {
+        return expectedSnowfall;
+    }
 
-        public String getMinTemp() {
-                return minTemp;
-        }
-
-        public String getWindChill() {
-                return windChill;
-        }
-
-        public float getExpectedRainfall() {
-                return expectedRainfall;
-        }
-
-        public float getExpectedSnowfall() {
-                return expectedSnowfall;
-        }
-
-        public String getWeatherConditions() {
-                return weatherConditions;
-        }
+    public String getWeatherConditions() {
+        return weatherConditions;
+    }
 }

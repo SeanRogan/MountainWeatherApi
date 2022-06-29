@@ -13,7 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
+
 import java.io.Serializable;
 
 @Entity(name="mountain_peak")
@@ -28,13 +28,14 @@ public class MountainPeak implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long peakId;
-    @Column
-
+    @Column(unique=true)
     private String peakName;
-    @Column
+    @Column(unique=true)
     private String homeSubrangeUri;
-    @Column
+
+    @Column(unique=true)
     private Long rangeId;
+
     @ManyToOne
     private SubRange homeSubrange;
     @ManyToOne

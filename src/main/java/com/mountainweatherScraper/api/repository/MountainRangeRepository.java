@@ -12,8 +12,8 @@ import java.util.Map;
 public interface MountainRangeRepository extends JpaRepository<MountainRange, Long> {
 
 
-    @Query("SELECT r FROM sub_ranges r WHERE r.uri = ?1 AND r.rangeName = ?2")
-    Boolean findIfRangeExists(String uri, String rangeName);
+    @Query("SELECT r.rangeName FROM sub_ranges r WHERE r.uri = ?1 AND r.rangeName = ?2")
+    String findIfRangeExists(String uri, String rangeName);
     //getAllSubRangesByRangeId
 
     //getAllPeaksInRangeByRangeId

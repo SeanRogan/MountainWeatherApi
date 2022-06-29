@@ -19,7 +19,8 @@ public class StartUpInitializer {
     public StartUpInitializer(DataService ds) {
         this.ds = ds;
     }
-    @EventListener
+
+    //to use this, use @Autowired
     public void initOnTrafficAcceptance(AvailabilityChangeEvent<ReadinessState> event) {
         if(event.getState().equals(ReadinessState.ACCEPTING_TRAFFIC)) {
             logger.info("Server is started\nReadinessState: ACCEPTING_TRAFFIC");

@@ -53,25 +53,35 @@ public class DataService {
     SubRangeRepository subRangeRepo;
     /**
      * the init method initialized the Database : it connects to the website, collects all major mountain range name/uri info to a Map,
-     * then loops through the map to create a new entity in the MySQL database for each major range,
+     * then loops through the map to create a new entity in the Postgres database for each major range,
      * along with their associated subranges, and all the mountain peaks associates with that mountain range.
      */
+
+    private boolean initialized;
+
+    public boolean isInitialized() {
+        return initialized;
+    }
+
     public void init() {
+
         logger.info("Collecting Data to populate DB with mountain ranges, sub ranges, and mountain peaks.");
         //get all mountain ranges, key = name of range, value = range URI
         HashMap<String, String> mountainRangeUriMap = getAllMajorMountainRangeUrls();
         //for each range in list, create new mountain range entity,
         // getAllSubRanges() and getAllPeaksInRange() should trigger
         // creation of all peaks and sub range entities.
-        mountainRangeUriMap.forEach((key, value) ->{
-            logger.trace("Creating Mountain Range Entity in Database: "+ key);
-            if(rangeRepo.findIfRangeExists(value,key)){
-            rangeRepo.save(new MountainRange(key,
-                    baseUrl + value,
-                    getAllSubRanges(value),
-                    getAllPeaksInRange(value)));
-        }});
-        logger.info("Data collection is complete!");
+        if(!isInitialized()) {
+            mountainRangeUriMap.forEach((key, value) -> {
+                logger.info("Creating Mountain Range Entity in Database: " + key);
+                rangeRepo.save(new MountainRange(key,
+                        baseUrl + value,
+                        getAllSubRanges(value),
+                        getAllPeaksInRange(value)));
+            });
+            logger.info("Data collection is complete!");
+            initialized = true;
+        }
     }
     /**
      * @param uri - the uri of the subrange
@@ -251,22 +261,22 @@ public class DataService {
 
         return result;
     }
+
+    /**
+     *
+     * @param itr an iterator of the wind condition html elements scraped from the web
+     * @return List<String> results - the wind conditions formatted as '{DIRECTION} {SPEED}' as a list of strings.
+     */
     private List<String> getWindConditions(Iterator<Element> itr) {
 
         List<String> result = new ArrayList<>();
         while(itr.hasNext()) {
             Element current = itr.next();
-            result.add("Wind Conditions: "
-                    + current.select("text.wind-icon__val").text()
+            result.add(current.select("text.wind-icon__val").text()
                     + " "
                     + current.select("div.wind-icon__tooltip").text());
         }
 
         return result;
-    }
-
-    public void clean() {
-        logger.info("cleaning database of duplicates");
-        //dont know how to build this but its needed.
     }
 }

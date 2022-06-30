@@ -5,26 +5,28 @@ import java.io.Serializable;
 public class Report implements Serializable {
     public Report(
             String peakName,
-            String maxTemp,
-            String minTemp,
+            DayOfTheWeek DayOfTheWeek,
+            String high,
+            String low,
             String windChill,
             float expectedSnowfall,
             float expectedRainfall,
             String weatherConditions,
             String windConditions) {
         this.peakName = peakName;
-        this.maxTemp = maxTemp;
-        this.minTemp = minTemp;
+        this.DayOfTheWeek = DayOfTheWeek;
+        this.high = high;
+        this.low = low;
         this.windChill = windChill;
         this.expectedSnowfall = expectedSnowfall;
         this.expectedRainfall = expectedRainfall;
         this.weatherConditions = weatherConditions;
         this.windConditions = windConditions;
     }
-
+    private final DayOfTheWeek DayOfTheWeek;
     private final String peakName;
-    private final String maxTemp;
-    private final String minTemp;
+    private final String high;
+    private final String low;
     private final String windChill;
     private final float expectedRainfall;
     private final float expectedSnowfall;
@@ -39,12 +41,12 @@ public class Report implements Serializable {
         return windConditions;
     }
 
-    public String getMaxTemp() {
-        return maxTemp;
+    public String getHigh() {
+        return high;
     }
 
-    public String getMinTemp() {
-        return minTemp;
+    public String getLow() {
+        return low;
     }
 
     public String getWindChill() {

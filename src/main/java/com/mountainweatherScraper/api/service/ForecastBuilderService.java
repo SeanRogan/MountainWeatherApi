@@ -1,6 +1,7 @@
 package com.mountainweatherScraper.api.service;
 
 import com.google.gson.Gson;
+import com.mountainweatherScraper.api.model.DayOfTheWeek;
 import com.mountainweatherScraper.api.model.Report;
 import com.mountainweatherScraper.api.model.Forecast;
 import com.mountainweatherScraper.api.repository.MountainPeakRepository;
@@ -22,14 +23,14 @@ import java.util.List;
  */
 @Service
 public class ForecastBuilderService{
-
+DayOfTheWeek weekdays;
     private static final Logger logger = LoggerFactory.getLogger(ForecastBuilderService.class);
 
     MountainPeakRepository peakRepo;
-    DataService dataService;
+    WeatherDataService weatherDataService;
     @Autowired
-    public void setDataService(DataService dataService) {
-        this.dataService = dataService;
+    public void setDataService(WeatherDataService weatherDataService) {
+        this.weatherDataService = weatherDataService;
     }
     @Autowired
     public void setPeakRepo(MountainPeakRepository peakRepo) {
@@ -46,7 +47,7 @@ public class ForecastBuilderService{
     public ResponseEntity<String> createWeatherReportResponse(Long peakId, int numberOfDays, HttpServletRequest request) {
         Gson g = new Gson();
         List<Forecast> weatherForecast = buildListOfForecasts(peakId,
-                dataService
+                weatherDataService
                         .getWeatherData(peakRepo
                                 .getPeakUriByPeakId(peakId),
                                 request.getHeader("Temp-format")),
@@ -79,6 +80,8 @@ public class ForecastBuilderService{
         Collections.replaceAll(rainForecast, "-","0.0");
         logger.trace("creating AM report for day" + num);
         Report amReport = new Report(peakRepo.getPeakNameById(peakId),
+                DayOfTheWeek.MONDAY,
+
                 maxTemps.get(num),
                 minTemps.get(num),
                 windChillTemps.get(num),
@@ -88,6 +91,8 @@ public class ForecastBuilderService{
                 windCondition.get(num));
         logger.trace("creating PM report for day" + num);
         Report pmReport = new Report(peakRepo.getPeakNameById(peakId),
+                DayOfTheWeek.MONDAY,
+
                 maxTemps.get(num+1),
                 minTemps.get(num+1),
                 windChillTemps.get(num+1),
@@ -97,6 +102,8 @@ public class ForecastBuilderService{
                 windCondition.get(num+1));
         logger.trace("creating NIGHT report for day" + num);
         Report nightReport = new Report(peakRepo.getPeakNameById(peakId),
+                DayOfTheWeek.MONDAY,
+
                 maxTemps.get(num+2),
                 minTemps.get(num+2),
                 windChillTemps.get(num+2),
@@ -109,12 +116,19 @@ public class ForecastBuilderService{
 
     }
     /**
+     * @param peakId - the peak id number
+     * @param weatherData - A List containing Lists of Strings,
+     *                   each inner List containing one of the
+     *                    collected weather data categories(high,low,windchill temps, etc)
+     * @param days - the number of days the weather forecast should cover(normally one day or six days)\
      *
+     * @return List<Forecast> a list of forecasts,one for each day specifies,
+     * each forecast containing 3 weather reports for the day.
      */
-    List<Forecast> buildListOfForecasts(Long peakId, List<List<String>> weatherData, int day) {
+    List<Forecast> buildListOfForecasts(Long peakId, List<List<String>> weatherData, int days) {
         List<Forecast> forecastList = new ArrayList<>();
 
-        for(int n = 0; n < day; n++) {
+        for(int n = 0; n < days; n++) {
             forecastList.add(buildForecast(peakId, weatherData, n));
         }
         return forecastList;

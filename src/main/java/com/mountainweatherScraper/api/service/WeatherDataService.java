@@ -32,14 +32,14 @@ import java.util.Set;
  */
 @NoArgsConstructor
 @Service
-public class DataService {
-    private static final Logger logger = LoggerFactory.getLogger(DataService.class);
+public class WeatherDataService {
+    private static final Logger logger = LoggerFactory.getLogger(WeatherDataService.class);
 
     @Autowired
-    public DataService(DataScraper ds,
-                       MountainPeakRepository peakRepo,
-                       MountainRangeRepository rangeRepo,
-                       SubRangeRepository subRangeRepo) {
+    public WeatherDataService(DataScraper ds,
+                              MountainPeakRepository peakRepo,
+                              MountainRangeRepository rangeRepo,
+                              SubRangeRepository subRangeRepo) {
         this.ds = ds;
         this.peakRepo = peakRepo;
         this.rangeRepo = rangeRepo;
@@ -84,7 +84,9 @@ public class DataService {
         }
     }
     /**
-     * @param uri - the uri of the subrange
+     * @param uri - the uri of the subrange the peaks belong to
+     *
+     * @return Set<MountainPeak> returns a Set of all the MountainPeak objects's associated with that subrange
      */
     private Set<MountainPeak> getAllPeaksInRange(String uri) {
 
@@ -236,6 +238,8 @@ public class DataService {
             Elements windElements = doc.getElementsByClass(windRow)
                     .select("tr.forecast__table-wind");
             dataList.add(6, getWindConditions(windElements.select("td.iconcell").iterator()));
+
+            //get days of the week
         }
 
         return dataList;
@@ -265,6 +269,9 @@ public class DataService {
     /**
      *
      * @param itr an iterator of the wind condition html elements scraped from the web
+     *
+     *            the getWindConditions exists to concat the wind data. scraped data returns a wind speed
+     *            and direction in the form of a compass bearing. this method combines the two into a single statistic
      * @return List<String> results - the wind conditions formatted as '{DIRECTION} {SPEED}' as a list of strings.
      */
     private List<String> getWindConditions(Iterator<Element> itr) {

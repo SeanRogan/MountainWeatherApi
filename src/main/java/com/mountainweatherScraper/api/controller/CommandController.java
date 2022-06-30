@@ -1,11 +1,9 @@
 package com.mountainweatherScraper.api.controller;
 
-import com.mountainweatherScraper.api.service.DataService;
-import org.apache.coyote.Request;
+import com.mountainweatherScraper.api.service.WeatherDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,9 +18,9 @@ public class CommandController {
 //this is hacky, but its the only way i can initialize the DB after deployment startup,
 // without it trying to replicate things on every start.
     private final Logger logger = LoggerFactory.getLogger(CommandController.class);
-    private final DataService ds;
+    private final WeatherDataService ds;
     @Autowired
-    public CommandController(DataService ds) {
+    public CommandController(WeatherDataService ds) {
         this.ds = ds;
     }
     @GetMapping("/initialize")

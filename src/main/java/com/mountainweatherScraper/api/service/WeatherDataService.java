@@ -142,7 +142,7 @@ public class WeatherDataService {
         temps.forEach(i -> {
             double n = Double.parseDouble(i);
             n = n * 1.8 + 32;
-            convertedTemps.add(Double.toString(n));
+            convertedTemps.add(String.valueOf(Math.round(n)));
         });
         return convertedTemps;
     }

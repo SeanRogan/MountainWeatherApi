@@ -1,5 +1,6 @@
 package com.mountainweatherScraper.api.util;
 
+import com.mountainweatherScraper.api.service.DatabaseInitializerService;
 import com.mountainweatherScraper.api.service.WeatherDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +14,9 @@ import org.springframework.stereotype.Component;
 public class StartUpInitializer {
 
     private final Logger logger = LoggerFactory.getLogger(StartUpInitializer.class);
-    private final WeatherDataService ds;
+    private final DatabaseInitializerService ds;
     @Autowired
-    public StartUpInitializer(WeatherDataService ds) {
+    public StartUpInitializer(DatabaseInitializerService ds) {
         this.ds = ds;
     }
 

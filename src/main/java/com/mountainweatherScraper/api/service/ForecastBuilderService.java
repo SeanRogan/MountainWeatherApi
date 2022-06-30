@@ -75,13 +75,13 @@ DayOfTheWeek weekdays;
         List<String> rainForecast = weatherData.get(4);
         List<String> weatherSummary = weatherData.get(5);
         List<String> windCondition = weatherData.get(6);
+        List<String> dayAndDate = weatherData.get(7);
         logger.trace("replacing: - with: 0.0 in precipitation forecasts");
         Collections.replaceAll(snowForecast, "-","0.0");
         Collections.replaceAll(rainForecast, "-","0.0");
         logger.trace("creating AM report for day" + num);
         Report amReport = new Report(peakRepo.getPeakNameById(peakId),
-                DayOfTheWeek.MONDAY,
-
+                dayAndDate.get(num),
                 maxTemps.get(num),
                 minTemps.get(num),
                 windChillTemps.get(num),
@@ -91,8 +91,7 @@ DayOfTheWeek weekdays;
                 windCondition.get(num));
         logger.trace("creating PM report for day" + num);
         Report pmReport = new Report(peakRepo.getPeakNameById(peakId),
-                DayOfTheWeek.MONDAY,
-
+                dayAndDate.get(num),
                 maxTemps.get(num+1),
                 minTemps.get(num+1),
                 windChillTemps.get(num+1),
@@ -102,8 +101,7 @@ DayOfTheWeek weekdays;
                 windCondition.get(num+1));
         logger.trace("creating NIGHT report for day" + num);
         Report nightReport = new Report(peakRepo.getPeakNameById(peakId),
-                DayOfTheWeek.MONDAY,
-
+                dayAndDate.get(num),
                 maxTemps.get(num+2),
                 minTemps.get(num+2),
                 windChillTemps.get(num+2),

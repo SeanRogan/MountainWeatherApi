@@ -183,6 +183,7 @@ public class WeatherDataService {
         String rainFallRow = "forecast__table-rain";
         String snowFallRow = "forecast__table-snow";
         String windRow = "forecast__table-wind";
+        String dayAndDate = "forecast__table-days-content";
         logger.info("scraping weather data from: " + uri);
         Document doc = ds.scrapeDocument(uri);
 
@@ -239,10 +240,25 @@ public class WeatherDataService {
                     .select("tr.forecast__table-wind");
             dataList.add(6, getWindConditions(windElements.select("td.iconcell").iterator()));
 
+            Elements dateElements = doc.getElementsByClass(dayAndDate).select("div > div:eq(1)");
+            Elements dayOfWeekElements = doc.getElementsByClass(dayAndDate).select("div > div:eq(0)");
+            dataList.add(7, getDayAndDateElements(dateElements, dayOfWeekElements));
             //get days of the week
         }
 
         return dataList;
+    }
+
+    private List<String> getDayAndDateElements(Elements dateElements, Elements dayOfWeekElements) {
+        List<String> daysOfTheWeek = new ArrayList<>();
+        List<String> daysOfTheMonth = new ArrayList<>();
+        dateElements.forEach(i -> daysOfTheMonth.add(i.text()));
+        dayOfWeekElements.forEach(i -> daysOfTheWeek.add(i.text()));
+        List<String> results = new ArrayList<>(6);
+        for(int i = 0; i<6; i++) {
+            results.add(String.format("%s (%s)",daysOfTheWeek.get(i),daysOfTheMonth.get(i)));
+        }
+        return results;
     }
 
     private List<String> convertTempsToImperial(List<String> temps) {

@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Report implements Serializable {
     public Report(
             String peakName,
-            DayOfTheWeek DayOfTheWeek,
+            String dayOfTheWeek,
             String high,
             String low,
             String windChill,
@@ -14,7 +14,7 @@ public class Report implements Serializable {
             String weatherConditions,
             String windConditions) {
         this.peakName = peakName;
-        this.DayOfTheWeek = DayOfTheWeek;
+        this.dayOfTheWeek = dayOfTheWeek;
         this.high = high;
         this.low = low;
         this.windChill = windChill;
@@ -23,7 +23,8 @@ public class Report implements Serializable {
         this.weatherConditions = weatherConditions;
         this.windConditions = windConditions;
     }
-    private final DayOfTheWeek DayOfTheWeek;
+
+    private final String dayOfTheWeek;
     private final String peakName;
     private final String high;
     private final String low;
@@ -33,6 +34,10 @@ public class Report implements Serializable {
     private final String weatherConditions;
     private final String windConditions;
 
+
+    public String getDayOfTheWeek() {
+        return dayOfTheWeek;
+    }
 
     public String getPeakName() {
         return peakName;

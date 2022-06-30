@@ -1,5 +1,6 @@
 package com.mountainweatherScraper.api.controller;
 
+import com.mountainweatherScraper.api.service.DatabaseInitializerService;
 import com.mountainweatherScraper.api.service.WeatherDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +19,9 @@ public class CommandController {
 //this is hacky, but its the only way i can initialize the DB after deployment startup,
 // without it trying to replicate things on every start.
     private final Logger logger = LoggerFactory.getLogger(CommandController.class);
-    private final WeatherDataService ds;
+    private final DatabaseInitializerService ds;
     @Autowired
-    public CommandController(WeatherDataService ds) {
+    public CommandController(DatabaseInitializerService ds) {
         this.ds = ds;
     }
     @GetMapping("/initialize")

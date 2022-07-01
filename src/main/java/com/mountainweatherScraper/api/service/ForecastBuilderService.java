@@ -48,8 +48,7 @@ DayOfTheWeek weekdays;
         Gson g = new Gson();
         List<Forecast> weatherForecast = buildListOfForecasts(peakId,
                 weatherDataService
-                        .getWeatherData(peakRepo
-                                .getPeakUriByPeakId(peakId),
+                        .getWeatherData(peakRepo.getPeakUriByPeakId(peakId),
                                 request.getHeader("Temp-format")),
                                 numberOfDays);
 
@@ -64,7 +63,18 @@ DayOfTheWeek weekdays;
 
     }
     /**
+     * @param peakId the id of the mountain peak.
+     * @param weatherData a list of lists of strings,
+     *                    each list containing a category of data needed by the forecast service;
+     *                    high, low, windchill, rain, snow, wind, weather summary,
+     *                    and the day of the week and date of the forecast.
+     * @param num the number of days the forecast should contain. normally 1 or 6.
      *
+     * the build forecast method creates 3 Report objects from the scraped weather data passed to it.
+     *            It then returns a Forecast object containing the 3 reports.
+     *
+     * @return Forecast object containing 3 reports, AM, PM and NIGHT,
+     * for the mountain specified by the peak id argument.
      */
     public Forecast buildForecast(Long peakId, List<List<String>> weatherData , int num) {
         //max temps, min, chill, snow, rain weather, wind

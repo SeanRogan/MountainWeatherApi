@@ -6,6 +6,10 @@ import com.mountainweatherScraper.api.service.ForecastBuilderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.http.HttpRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,11 +37,20 @@ public class DemoController {
     }
 
     @GetMapping("/demo")
-    ModelAndView DemoViewListAllPeaks() {
-        ModelAndView mav = new ModelAndView("demo-view");
-        List<MountainPeak> listOfPeaks = peakRepo.getAllPeakNames();
-        mav.addObject("peak_list" , listOfPeaks);
-        return mav;
+    ModelAndView DemoViewListAllPeaks(
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "100") Integer pageSize,
+            @RequestParam(defaultValue = "peakName") String sortBy) {
+        Pageable pageable = PageRequest.of(pageNo,pageSize, Sort.by(sortBy));
+        Page<MountainPeak> pagedResult = peakRepo.findAllDemoPeaks(pageable);
+        List<MountainPeak> listOfPeaks;
+        if(pagedResult.hasContent()) {
+            listOfPeaks = pagedResult.getContent();
+        }
+            else listOfPeaks = peakRepo.getAllPeakNames();
+            ModelAndView mav = new ModelAndView();
+            mav.addObject("peak_list", listOfPeaks);
+            return mav;
     }
     @GetMapping("/getExtendedForecastDemo")
     ResponseEntity<String> getExtendedForecastDemo(@RequestParam Long peakId) {

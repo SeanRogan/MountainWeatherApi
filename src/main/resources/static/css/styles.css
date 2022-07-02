@@ -16,7 +16,7 @@
 
 }
 .endpoint-sample-response{
-    font-font: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 2rem;
     text-align: center;
 }
@@ -30,8 +30,9 @@
 
 }
 .endpoint-title{
-    font-font: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 4rem;
+
 }
 .endpoint-title-content{
 
@@ -41,7 +42,7 @@
 }
 .endpoint-variable{
 
-    font-font: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 2rem;
 
 
@@ -52,28 +53,23 @@
     text-align: left;
 
 }
-.home-title{
-    font-font: Arial, Helvetica, sans-serif;
-    font-size: 12rem;
+
+.home-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 6rem;
     text-align: center;
+    color: white;
 
 }
-.nav-item{}
-.nav-link{}
-.navbar{}
-.navbar-brand{}
-.navbar-nav{}
-.navbar-toggler{}
 .page-title-docs{
     font-size: 6rem;
     text-align: center;
-
 }
 .title-page-summary{
+
     font-family: Georgia, serif;
-
-    font-size: 3rem;
-
+    font-size: 1.6rem;
     text-align: center;
+    color: white;
 
 }

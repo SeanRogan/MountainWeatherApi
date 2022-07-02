@@ -12,13 +12,16 @@ import java.util.Map;
 
 @Repository
 public interface MountainPeakRepository extends JpaRepository<MountainPeak, Long>, CustomRepository {
-    @Query(value = "SELECT m.peak_name, peak_id FROM mountain_peak m WHERE m.peak_name ILIKE CONCAT(:q,'%') ;",nativeQuery = true)
+    @Query(value = "SELECT m.peak_name, peak_id FROM mountain_peak m WHERE m.peak_name ILIKE CONCAT(:q,'%') ;" , nativeQuery = true)
     List<Map<String,Long>> getTop10MountainPeakIdByName(@Param("q") String query);
     @Query("SELECT m.uri FROM mountain_peak m WHERE m.peakId = ?1")
     String getPeakUriByPeakId(Long peakId);
-    @Query("SELECT m.uri FROM mountain_peak m WHERE m.peakName = ?1")
-    String getPeakUriByName(String query);
+    @Query(value = "SELECT m.uri FROM mountain_peak m WHERE m.peak_name ILIKE CONCAT(:q,'%');" , nativeQuery = true)
+    String getPeakUriByName(@Param("q") String query);
     @Query("SELECT m.peakName FROM mountain_peak m WHERE m.peakId = ?1")
     String getPeakNameById(Long peakId);
+
+    @Query("SELECT m FROM mountain_peak m")
+    List<MountainPeak> getAllPeakNames();
 
 }

@@ -12,5 +12,6 @@ public class HomeViewController {
         ModelAndView mav = new ModelAndView("home-view");
         return mav;
     }
+
 }
 

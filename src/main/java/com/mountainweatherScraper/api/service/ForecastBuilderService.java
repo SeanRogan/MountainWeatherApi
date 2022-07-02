@@ -44,12 +44,12 @@ DayOfTheWeek weekdays;
      */
 
     //todo i think this method should logically go in its own class, a ResponseBuilderService class.
-    public ResponseEntity<String> createWeatherReportResponse(Long peakId, int numberOfDays, HttpServletRequest request) {
+    public ResponseEntity<String> createWeatherReportResponse(Long peakId, int numberOfDays, String tempFormat) {
         Gson g = new Gson();
         List<Forecast> weatherForecast = buildListOfForecasts(peakId,
                 weatherDataService
                         .getWeatherData(peakRepo.getPeakUriByPeakId(peakId),
-                                request.getHeader("Temp-format")),
+                                tempFormat),
                                 numberOfDays);
 
         HttpStatus status = HttpStatus.OK;

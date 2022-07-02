@@ -14,8 +14,6 @@ import java.io.IOException;
 @Component
 @NoArgsConstructor
 public class DataScraper {
-    //todo we need to get selenium up and running and probably use it here.
-    // id like the datascraper to fetch the page with selenium and then use jsoup to go thru the returned html
     private static final Logger logger = LoggerFactory.getLogger(DataScraper.class);
     /**
      * @return Document - returns an HTML document object, scraped from the uri argument.

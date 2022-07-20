@@ -56,6 +56,7 @@ public class WeatherDataService {
         String maxTempRow = "forecast__table-max-temperature";
         String minTempRow = "forecast__table-min-temperature";
         String windChillRow = "forecast__table-chill";
+        String windChillAlt = "forecast__table-feels";
         String rainFallRow = "forecast__table-rain";
         String snowFallRow = "forecast__table-snow";
         String windRow = "forecast__table-wind";
@@ -79,6 +80,14 @@ public class WeatherDataService {
             Elements windChillElements = doc.getElementsByClass(windChillRow)
                     .select("span.temp");
             dataList.add(2,collectToList(windChillElements.iterator()));
+            //during warm weather the data source changes 'wind chill' to 'feels like',
+            // so check if windchillelements failed to collect anything
+            // and use the 'feels' tag to scrape the wind chill data if thats the case
+            if(dataList.get(2).isEmpty()) {
+                windChillElements = doc.getElementsByClass(windChillAlt)
+                        .select("span.temp");
+                dataList.add(2,collectToList(windChillElements.iterator()));
+            }
                 try{
                     if(tempFormat.equals("F")){
                         logger.info("converting temperature values to Imperial Units");

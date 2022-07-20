@@ -13,7 +13,6 @@ public class Forecast implements Serializable {
 
     public Forecast(Report amReport, Report pmReport, Report nightReport) {
         Map<String,Report> forecastDataMap = new LinkedHashMap<>();
-
         forecastDataMap.put("AM",amReport);
         forecastDataMap.put("PM",pmReport);
         forecastDataMap.put("Night",nightReport);

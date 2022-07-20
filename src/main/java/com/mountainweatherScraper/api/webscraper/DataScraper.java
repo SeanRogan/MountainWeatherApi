@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 /**
- *
+ *The DataScraper class handles the web-scraping process
  */
 @Component
 @NoArgsConstructor
@@ -17,7 +17,6 @@ public class DataScraper {
     private static final Logger logger = LoggerFactory.getLogger(DataScraper.class);
     /**
      * @return Document - returns an HTML document object, scraped from the uri argument.
-     *
      * @param uri - a webpage uri to scrape data from.
      */
     public Document scrapeDocument(String uri) {

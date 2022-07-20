@@ -6,7 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * The SearchFormatter class formats the query string from url encoded
+ * to a string that will match the keywords in the database
  */
 @NoArgsConstructor
 @Component

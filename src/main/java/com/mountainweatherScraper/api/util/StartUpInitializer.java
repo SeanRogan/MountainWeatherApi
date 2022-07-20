@@ -1,7 +1,6 @@
 package com.mountainweatherScraper.api.util;
 
 import com.mountainweatherScraper.api.service.DatabaseInitializerService;
-import com.mountainweatherScraper.api.service.WeatherDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,9 @@ import org.springframework.boot.availability.AvailabilityChangeEvent;
 import org.springframework.boot.availability.ReadinessState;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * The StartUpInitializer class handles the initial population
+ */
 @Component
 public class StartUpInitializer {
 

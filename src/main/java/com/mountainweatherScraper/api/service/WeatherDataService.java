@@ -139,11 +139,16 @@ public class WeatherDataService {
 
     private List<String> convertTempsToImperial(List<String> temps) {
         List<String> convertedTemps = new ArrayList<>();
-        temps.forEach(i -> {
-            double n = Double.parseDouble(i);
-            n = n * 1.8 + 32;
-            convertedTemps.add(String.valueOf(Math.round(n)));
-        });
+        try {
+            temps.forEach(i -> {
+                double n = Double.parseDouble(i);
+                n = n * 1.8 + 32;
+                convertedTemps.add(String.valueOf(Math.round(n)));
+            });
+        } catch (NullPointerException e) {
+            logger.warn("Null Pointer Exception thrown @ WeatherDataService.convertTempToImperial - " + e.getMessage());
+
+        }
         return convertedTemps;
     }
 

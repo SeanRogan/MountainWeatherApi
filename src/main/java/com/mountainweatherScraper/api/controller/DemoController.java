@@ -21,16 +21,16 @@ import java.util.List;
 @Controller
 public class DemoController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ReportsController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ForecastController.class);
     ForecastBuilderService service;
-    ReportsController reportsController;
+    ForecastController forecastController;
     MountainPeakRepository peakRepo;
 
     @Autowired
-    public DemoController(ForecastBuilderService service, MountainPeakRepository peakRepo, ReportsController reportsController) {
+    public DemoController(ForecastBuilderService service, MountainPeakRepository peakRepo, ForecastController forecastController) {
         this.service = service;
         this.peakRepo = peakRepo;
-        this.reportsController = reportsController;
+        this.forecastController = forecastController;
     }
 
     @GetMapping("/demo")

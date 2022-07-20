@@ -1,7 +1,6 @@
 package com.mountainweatherScraper.api.controller;
 
 import com.mountainweatherScraper.api.service.ForecastBuilderService;
-import com.mountainweatherScraper.api.service.RequestHandlerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 /**
- * ReportsController is a controller class. it handles requests for a weather forecast to be returned.
+ * ForecastController is a controller class. it handles requests for a weather forecast to be returned.
  */
 @Controller
 @RequestMapping("/report")
-public class ReportsController {
-//todo need a get mapping to return mountainid by mountain name and state
+public class ForecastController {
+
 // todo future feature : request handler takes the request and handles authentication/authorization
 
-    private static final Logger logger = LoggerFactory.getLogger(ReportsController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ForecastController.class);
     @Autowired
     public void setForecastBuilderService(ForecastBuilderService service) {
         this.service = service;
@@ -36,7 +35,7 @@ public class ReportsController {
      * @return ResponseEntity<String> returns a daily weather report in the format of a Json object
      */
     @GetMapping(value = "/daily/{mountainId}")
-    public ResponseEntity<String> getDailyReportByMountain(HttpServletRequest request, @PathVariable Long mountainId) {
+    public ResponseEntity<String> getDailyForecastByMountainId(HttpServletRequest request, @PathVariable Long mountainId) {
         logger.info("creating one day weather forecast for " + mountainId);
         String tempFormatHeader = request.getHeader("Temp-format");
         return service.createWeatherReportResponse(mountainId, 1, tempFormatHeader);

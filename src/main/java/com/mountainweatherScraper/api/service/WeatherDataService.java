@@ -35,7 +35,7 @@ public class WeatherDataService {
 
     /**
      * @param uri the uri of the specific mountain peak with which the weather data is associated.
-     *
+     * @param tempFormat the temperature units the weather report is to be displayed in; Fahrenheit or Celsius
      * @return List<String[]> dataList - returns a list of string arrays,
      * each array containing all the values of one of 7 categories,
      * categories being the high temperatures, low temperatures,
@@ -134,6 +134,12 @@ public class WeatherDataService {
         return dataList;
     }
 
+    /**
+     *
+     * @param dateElements
+     * @param dayOfWeekElements
+     * @return
+     */
     private List<String> getDayAndDateElements(Elements dateElements, Elements dayOfWeekElements) {
         List<String> daysOfTheWeek = new ArrayList<>();
         List<String> daysOfTheMonth = new ArrayList<>();
@@ -146,6 +152,11 @@ public class WeatherDataService {
         return results;
     }
 
+    /**
+     *
+     * @param temps
+     * @return
+     */
     private List<String> convertTempsToImperial(List<String> temps) {
         List<String> convertedTemps = new ArrayList<>();
         try {
@@ -161,6 +172,11 @@ public class WeatherDataService {
         return convertedTemps;
     }
 
+    /**
+     *
+     * @param itr
+     * @return
+     */
     private List<String> collectToList(Iterator<Element> itr) {
         List<String> result = new ArrayList<>();
 
@@ -173,7 +189,6 @@ public class WeatherDataService {
     }
 
     /**
-     *
      * @param itr an iterator of the wind condition html elements scraped from the web
      *
      *            the getWindConditions exists to concat the wind data. scraped data returns a wind speed

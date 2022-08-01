@@ -21,6 +21,8 @@ public interface MountainPeakRepository extends PagingAndSortingRepository<Mount
     String getPeakUriByPeakId(Long peakId);
     @Query("SELECT m.peakName FROM mountain_peak m WHERE m.peakId = ?1")
     String getPeakNameById(Long peakId);
+
+    //these two below are only used for the demo on the homepage
     @Query("SELECT m FROM mountain_peak m")
     List<MountainPeak> getAllPeakNames();
     @Query("SELECT m FROM mountain_peak m WHERE m.peakName LIKE 'Mount Washington(New Hampshire)' OR m.peakName LIKE  'Mount Katahdin' OR m.peakName LIKE  'Mount Whitney' OR m.peakName LIKE  'Mount McKinley' OR m.peakName LIKE  'Grand Teton' OR m.peakName LIKE  'Mount Rainier' OR m.peakName LIKE  'Mount Shasta' OR m.peakName LIKE  'Mount Baker' OR m.peakName LIKE  'Mount Elbert' OR m.peakName LIKE  'K2'")

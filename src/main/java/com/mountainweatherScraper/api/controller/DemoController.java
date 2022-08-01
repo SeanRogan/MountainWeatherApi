@@ -36,7 +36,7 @@ public class DemoController {
     @GetMapping("/demo")
     ModelAndView DemoViewListAllPeaks(
             @RequestParam(defaultValue = "0") Integer pageNo,
-            @RequestParam(defaultValue = "100") Integer pageSize,
+            @RequestParam(defaultValue = "100 ") Integer pageSize,
             @RequestParam(defaultValue = "peakName") String sortBy) {
         Pageable pageable = PageRequest.of(pageNo,pageSize, Sort.by(sortBy));
         Page<MountainPeak> pagedResult = peakRepo.findAllDemoPeaks(pageable);
@@ -44,10 +44,10 @@ public class DemoController {
         if(pagedResult.hasContent()) {
             listOfPeaks = pagedResult.getContent();
         }
-            else listOfPeaks = peakRepo.getAllPeakNames();
-            ModelAndView mav = new ModelAndView();
-            mav.addObject("peak_list", listOfPeaks);
-            return mav;
+        else listOfPeaks = peakRepo.getAllPeakNames();
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("peak_list", listOfPeaks);
+        return mav;
     }
     @GetMapping("/getExtendedForecastDemo")
     ResponseEntity<String> getExtendedForecastDemo(@RequestParam Long peakId) {

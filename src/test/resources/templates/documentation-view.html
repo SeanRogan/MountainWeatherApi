@@ -1,0 +1,107 @@
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+          crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users Demo</title>
+
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<div class="container">
+
+
+    <!--navbar-->
+
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container">
+            <a class="navbar-brand" id="doc-home-button" th:href="@{/}">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" id="doc-demo-button" aria-current="page" th:href="@{/demo}">Check out the Demo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="doc-rapid-api-button" href="https://rapidapi.com/SeanRogan/api/peak-conditions">Find the project on the Rapid API Hub</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--navbar-->
+    <h1 class="page-title-docs">Peak Conditions API Documentation</h1>
+    <p class="endpoint-title">endpoint:
+    <div class="endpoint-title-content">
+        /search
+    </div>
+
+
+    <div class="endpoint-summary">
+        <h2 class="endpoint-method">GET</h2>
+        <h3 class="endpoint-method-description">search mountain peak by name</h3>
+
+        <h4 class="endpoint-variable endpoint-parameters">Parameter</h4>
+
+        <p class="endpoint-variable-description">'query' String - required : the name of the mountain you wish to find</p>
+
+        <h3 class="endpoint-sample-response">sample responses:</h3>
+        <p class="endpoint-sample-response-content">
+            [{"peak_name":"Mount Washington (Nevada)","peak_id":13368},{"peak_name":"Mount Washington (Arizona)","peak_id":13433},{"peak_name":"Mount Washington (New Hampshire)","peak_id":18499},{"peak_name":"Mount Washington (Olympic)","peak_id":19529},{"peak_name":"Mount Washington (British Columbia)","peak_id":19563},{"peak_name":"Mount Washington (Cascades)","peak_id":19650},{"peak_id":19965,"peak_name":"Mount Washington (Oregon)"}]
+        </p>
+    </div>
+
+    <p class="endpoint-title">endpoint:
+        <br>
+    <div class="endpoint-title-content">/report/daily/{peak id}</div>
+
+    <div class="endpoint-summary">
+        <h2 class="endpoint-method">GET</h2>
+        <h3 class="endpoint-method-description">get one day forecast by mountain id</h3>
+
+        <h4 class="endpoint-variable endpoint-parameters">Parameter</h4>
+
+        <p class="endpoint-variable-description">'peak id' String - required : the id String of the peak</p>
+
+        <h4 class="endpoint-variable endpoint-headers">Header</h4>
+
+        <p class="endpoint-variable-description">'Temp-format' - required : specifies the temperature unit format for weather reports. options are F or C,
+            for Imperial/Fahrenheit units or Metric/Celsius units respectively.</p>
+        <br>
+        <br>
+        <h3 class="endpoint-sample-response">sample responses:</h3>
+        <p class="endpoint-sample-response-content">
+            [{"forecastData":{"AM":{"dayOfTheWeek":"Saturday (2)","peakName":"Mount Washington (New Hampshire)","high":"10","low":"9","windChill":"6","expectedRainfall":3.0,"expectedSnowfall":0.0,"weatherConditions":"rain shwrs","windConditions":"40 W"},"PM":{"dayOfTheWeek":"Saturday (2)","peakName":"Mount Washington (New Hampshire)","high":"11","low":"11","windChill":"7","expectedRainfall":1.0,"expectedSnowfall":0.0,"weatherConditions":"rain shwrs","windConditions":"45 W"},"Night":{"dayOfTheWeek":"Saturday (2)","peakName":"Mount Washington (New Hampshire)","high":"11","low":"8","windChill":"8","expectedRainfall":0.0,"expectedSnowfall":0.0,"weatherConditions":"clear","windConditions":"40 W"}}}]        </p>
+    </div>
+    <br>
+    <p class="endpoint-title"> endpoint:<br>
+    <div class="endpoint-title-content">/report/extended/{peak id}</div>
+    <br>
+    <div class="endpoint-summary">
+
+        <h2 class="endpoint-method">GET</h2>
+        <h3 class="endpoint-method-description">get extended six day forecast by mountain id</h3>
+        <br>
+        <br>
+        <h4 class="endpoint-variable endpoint-parameters">Parameter</h4>
+        <br>
+        <p class="endpoint-variable-description">'peak id' String - required : the id String of the peak</p>
+        <br>
+        <br>
+        <h4 class="endpoint-variable endpoint-headers">Header</h4>
+        <br>
+        <p class="endpoint-variable-description">'Temp-format' - required : specifies the temperature unit format for weather reports. options are F or C,
+            for Imperial/Fahrenheit units or Metric/Celsius units respectively.</p>
+        <br>
+        <br>
+        <p class="endpoint-sample-response-content"> [{"forecastData":{"AM":{"dayOfTheWeek":"Saturday (2)","peakName":"Mount Washington (New Hampshire)","high":"50","low":"48","windChill":"43","expectedRainfall":3.0,"expectedSnowfall":0.0,"weatherConditions":"rain shwrs","windConditions":"40 W"},"PM":{"dayOfTheWeek":"Saturday (2)","peakName":"Mount Washington (New Hampshire)","high":"52","low":"52","windChill":"45","expectedRainfall":1.0,"expectedSnowfall":0.0,"weatherConditions":"rain shwrs","windConditions":"45 W"},"Night":{"dayOfTheWeek":"Saturday (2)","peakName":"Mount Washington (New Hampshire)","high":"52","low":"46","windChill":"46","expectedRainfall":0.0,"expectedSnowfall":0.0,"weatherConditions":"clear","windConditions":"40 W"}}},{"forecastData":{"AM":{"dayOfTheWeek":"Sunday (3)","peakName":"Mount Washington (New Hampshire)","high":"52","low":"52","windChill":"45","expectedRainfall":1.0,"expectedSnowfall":0.0,"weatherConditions":"rain shwrs","windConditions":"45 W"},"PM":{"dayOfTheWeek":"Sunday (3)","peakName":"Mount Washington (New Hampshire)","high":"52","low":"46","windChill":"46","expectedRainfall":0.0,"expectedSnowfall":0.0,"weatherConditions":"clear","windConditions":"40 W"},"Night":{"dayOfTheWeek":"Sunday (3)","peakName":"Mount Washington (New Hampshire)","high":"45","low":"45","windChill":"36","expectedRainfall":0.0,"expectedSnowfall":0.0,"weatherConditions":"clear","windConditions":"40 WNW"}}},{"forecastData":{"AM":{"dayOfTheWeek":"Monday (4)","peakName":"Mount Washington (New Hampshire)","high":"52","low":"46","windChill":"46","expectedRainfall":0.0,"expectedSnowfall":0.0,"weatherConditions":"clear","windConditions":"40 W"},"PM":{"dayOfTheWeek":"Monday (4)","peakName":"Mount Washington (New Hampshire)","high":"45","low":"45","windChill":"36","expectedRainfall":0.0,"expectedSnowfall":0.0,"weatherConditions":"clear","windConditions":"40 WNW"},"Night":{"dayOfTheWeek":"Monday (4)","peakName":"Mount Washington (New Hampshire)","high":"46","low":"45","windChill":"37","expectedRainfall":0.0,"expectedSnowfall":0.0,"weatherConditions":"clear","windConditions":"50 WNW"}}},{"forecastData":{"AM":{"dayOfTheWeek":"Tuesday (5)","peakName":"Mount Washington (New Hampshire)","high":"45","low":"45","windChill":"36","expectedRainfall":0.0,"expectedSnowfall":0.0,"weatherConditions":"clear","windConditions":"40 WNW"},"PM":{"dayOfTheWeek":"Tuesday (5)","peakName":"Mount Washington (New Hampshire)","high":"46","low":"45","windChill":"37","expectedRainfall":0.0,"expectedSnowfall":0.0,"weatherConditions":"clear","windConditions":"50 WNW"},"Night":{"dayOfTheWeek":"Tuesday (5)","peakName":"Mount Washington (New Hampshire)","high":"43","low":"39","windChill":"34","expectedRainfall":0.0,"expectedSnowfall":0.0,"weatherConditions":"clear","windConditions":"50 NW"}}},{"forecastData":{"AM":{"dayOfTheWeek":"Wednesday (6)","peakName":"Mount Washington (New Hampshire)","high":"46","low":"45","windChill":"37","expectedRainfall":0.0,"expectedSnowfall":0.0,"weatherConditions":"clear","windConditions":"50 WNW"},"PM":{"dayOfTheWeek":"Wednesday (6)","peakName":"Mount Washington (New Hampshire)","high":"43","low":"39","windChill":"34","expectedRainfall":0.0,"expectedSnowfall":0.0,"weatherConditions":"clear","windConditions":"50 NW"},"Night":{"dayOfTheWeek":"Wednesday (6)","peakName":"Mount Washington (New Hampshire)","high":"43","low":"41","windChill":"32","expectedRainfall":0.0,"expectedSnowfall":0.0,"weatherConditions":"clear","windConditions":"50 NW"}}},{"forecastData":{"AM":{"dayOfTheWeek":"Thursday (7)","peakName":"Mount Washington (New Hampshire)","high":"43","low":"39","windChill":"34","expectedRainfall":0.0,"expectedSnowfall":0.0,"weatherConditions":"clear","windConditions":"50 NW"},"PM":{"dayOfTheWeek":"Thursday (7)","peakName":"Mount Washington (New Hampshire)","high":"43","low":"41","windChill":"32","expectedRainfall":0.0,"expectedSnowfall":0.0,"weatherConditions":"clear","windConditions":"50 NW"},"Night":{"dayOfTheWeek":"Thursday (7)","peakName":"Mount Washington (New Hampshire)","high":"46","low":"43","windChill":"37","expectedRainfall":0.0,"expectedSnowfall":0.0,"weatherConditions":"some clouds","windConditions":"45 WNW"}}}]</p>
+    </div>
+</div>
+</body>
+</html>

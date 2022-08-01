@@ -17,17 +17,17 @@
 <!--navbar-->
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container">
-        <a class="navbar-brand" th:href="@{/}">Home</a>
+        <a class="navbar-brand" id="demo-home-button" th:href="@{/}">Home</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/documentation}"> Read the Documentation</a>
+                    <a class="nav-link" id="demo-doc-button" th:href="@{/documentation}"> Read the Documentation</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"  href="https://rapidapi.com/SeanRogan/api/peak-conditions">Find the project on the Rapid API Hub</a>
+                    <a class="nav-link" id="demo-rapid-api-button" href="https://rapidapi.com/SeanRogan/api/peak-conditions">Find the project on the Rapid API Hub</a>
                 </li>
             </ul>
         </div>
@@ -49,10 +49,10 @@
     <tr th:each="peak: ${peak_list}">
         <td th:text="${peak.peakName}" />
         <td>
-            <a th:href="@{/getOneDayForecastDemo(peakId=${peak.peakId})}" class="btn btn-info">Get 1 Day Forecast</a>
+            <a th:href="@{/getOneDayForecastDemo(peakId=${peak.peakId})}" class="demo-btn btn btn-info">Get 1 Day Forecast</a>
         </td>
         <td>
-            <a th:href="@{/getExtendedForecastDemo(peakId=${peak.peakId})}" class="btn btn-info">Get 6 Day Forecast</a>
+            <a th:href="@{/getExtendedForecastDemo(peakId=${peak.peakId})}" class="demo-btn btn btn-info">Get 6 Day Forecast</a>
         </td>
 
     </tr>

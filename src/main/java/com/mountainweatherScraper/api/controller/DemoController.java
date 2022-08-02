@@ -44,7 +44,7 @@ public class DemoController {
         if(pagedResult.hasContent()) {
             listOfPeaks = pagedResult.getContent();
         }
-        else listOfPeaks = peakRepo.getAllPeakNames();
+        else listOfPeaks = peakRepo.getAllPeaks();
         ModelAndView mav = new ModelAndView();
         mav.addObject("peak_list", listOfPeaks);
         return mav;

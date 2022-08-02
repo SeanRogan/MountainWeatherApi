@@ -1,21 +1,18 @@
 package com.mountainweatherScraper.api.repository;
 
 import com.mountainweatherScraper.api.entities.MountainPeak;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.event.annotation.BeforeTestMethod;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+
 @DataJpaTest
 class MountainPeakRepositoryTest {
     String[] peakNamesExpected = {"Mount Washington (Nevada)"
@@ -48,7 +45,7 @@ class MountainPeakRepositoryTest {
         repoUnderTest.save(new MountainPeak("Bear Mountain (California)", "/bear-mountain-2", "/subranges/tehachapi-mountains-1/locations"));
         repoUnderTest.save(new MountainPeak("Mount Washington (Arizona)", "/mount-washington-3", "/subranges/southwest-basins-and-ranges/locations"));
 
-        List<MountainPeak> repoContents = repoUnderTest.getAllPeakNames();
+        List<MountainPeak> repoContents = repoUnderTest.getAllPeaks();
         for(MountainPeak m : repoContents) {
             idArray.add(m.getPeakId());
         }
@@ -91,7 +88,7 @@ class MountainPeakRepositoryTest {
     @Test
     void getAllPeakNames() {
 
-        List<MountainPeak> result = repoUnderTest.getAllPeakNames();
+        List<MountainPeak> result = repoUnderTest.getAllPeaks();
         int p = 0;
         for(MountainPeak m : result) {
             assertThat(m.getPeakName()).isEqualTo(peakNamesExpected[p++]);

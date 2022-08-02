@@ -25,13 +25,13 @@ import java.util.List;
 @Service
 public class WeatherDataService {
     private static final Logger logger = LoggerFactory.getLogger(WeatherDataService.class);
+    private DataScraper ds;
 
     @Autowired
     public WeatherDataService(DataScraper ds) {
         this.ds = ds;
     }
 
-    private DataScraper ds;
 
     /**
      * @param uri the uri of the specific mountain peak with which the weather data is associated.

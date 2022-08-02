@@ -6,6 +6,10 @@ import com.mountainweatherScraper.api.util.SearchFormatter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -17,15 +21,18 @@ import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class SearchServiceTest {
-    @Autowired
-    MountainPeakRepository testPeakRepo;
-    SearchFormatter searchFormatter = new SearchFormatter();
-    SearchService serviceUnderTest;
+    @Mock
+    private MountainPeakRepository testPeakRepo;
+    private AutoCloseable autoCloseable;
+    @Mock
+    private SearchFormatter searchFormatter;
+    private SearchService serviceUnderTest;
 
     @BeforeEach
     void setUp() {
+        autoCloseable = MockitoAnnotations.openMocks(this);
         testPeakRepo.save(new MountainPeak("Mount Washington","/test-uri","subrangetesturi"));
         serviceUnderTest = new SearchService(testPeakRepo,searchFormatter);
     }
@@ -35,12 +42,13 @@ class SearchServiceTest {
         ResponseEntity<String> response = serviceUnderTest.searchForMountainPeak("mount+washington");
         assertEquals(response.getStatusCode(), HttpStatus.OK);
         if(response.hasBody() && response.getBody() != null) {
-            assertTrue(response.getBody().contains("Mount Washington"));
+            assertFalse(response.getBody().isEmpty());
         }
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() throws Exception{
+        autoCloseable.close();
     testPeakRepo.deleteAll();
     }
 }

@@ -16,15 +16,11 @@ import java.util.Map;
 @Service
 public class SearchService {
     private MountainPeakRepository peakRepo;
-    private MountainRangeRepository rangeRepo;
-    private SubRangeRepository subrangeRepo;
     private final SearchFormatter formatter;
 
     @Autowired
-    public SearchService(MountainPeakRepository peakRepo, MountainRangeRepository rangeRepo, SubRangeRepository subrangeRepo, SearchFormatter formatter) {
+    public SearchService(MountainPeakRepository peakRepo, SearchFormatter formatter) {
         this.peakRepo = peakRepo;
-        this.rangeRepo = rangeRepo;
-        this.subrangeRepo = subrangeRepo;
         this.formatter = formatter;
     }
 
@@ -32,8 +28,6 @@ public class SearchService {
         Gson gson = new Gson();
         query = formatter.format(query);
         List<Map<String,Long>> searchResults = peakRepo.getTop10MountainPeakIdByName(query);
-
-        //Map<String,Long> searchResults = peakRepo.getTop10MountainPeakIdByName(query);
         if (!(searchResults == null)) {
             HttpStatus okStatus = HttpStatus.OK;
             String responseBody = gson.toJson(searchResults);

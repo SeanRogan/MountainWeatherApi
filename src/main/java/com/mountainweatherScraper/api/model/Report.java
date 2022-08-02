@@ -1,7 +1,9 @@
 package com.mountainweatherScraper.api.model;
 
-import java.io.Serializable;
+import lombok.Data;
 
+import java.io.Serializable;
+@Data
 public class Report implements Serializable {
     public Report(
             String peakName,
@@ -33,40 +35,4 @@ public class Report implements Serializable {
     private final float expectedSnowfall;
     private final String weatherConditions;
     private final String windConditions;
-
-
-    public String getDayOfTheWeek() {
-        return dayOfTheWeek;
-    }
-
-    public String getPeakName() {
-        return peakName;
-    }
-    public String getWindConditions() {
-        return windConditions;
-    }
-
-    public String getHigh() {
-        return high;
-    }
-
-    public String getLow() {
-        return low;
-    }
-
-    public String getWindChill() {
-        return windChill;
-    }
-
-    public float getExpectedRainfall() {
-        return expectedRainfall;
-    }
-
-    public float getExpectedSnowfall() {
-        return expectedSnowfall;
-    }
-
-    public String getWeatherConditions() {
-        return weatherConditions;
-    }
 }

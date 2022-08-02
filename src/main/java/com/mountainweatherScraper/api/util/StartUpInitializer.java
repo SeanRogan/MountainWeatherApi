@@ -9,7 +9,8 @@ import org.springframework.boot.availability.ReadinessState;
 import org.springframework.stereotype.Component;
 
 /**
- * The StartUpInitializer class handles the initial population
+ * @deprecated
+ * The StartUpInitializer class handles the initial db population on application start
  */
 @Component
 public class StartUpInitializer {

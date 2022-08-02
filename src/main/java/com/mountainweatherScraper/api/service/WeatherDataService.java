@@ -50,7 +50,6 @@ public class WeatherDataService {
      */
     public List<List<String>> getWeatherData(String uri , String tempFormat) {
 
-
         List<List<String>> dataList = new ArrayList<>(7);
         String weatherConditionsRow = "forecast__table-summary";
         String maxTempRow = "forecast__table-max-temperature";
@@ -130,16 +129,8 @@ public class WeatherDataService {
             dataList.add(7, getDayAndDateElements(dateElements, dayOfWeekElements));
             //get days of the week
         }
-
         return dataList;
     }
-
-    /**
-     *
-     * @param dateElements
-     * @param dayOfWeekElements
-     * @return
-     */
     private List<String> getDayAndDateElements(Elements dateElements, Elements dayOfWeekElements) {
         List<String> daysOfTheWeek = new ArrayList<>();
         List<String> daysOfTheMonth = new ArrayList<>();
@@ -151,12 +142,6 @@ public class WeatherDataService {
         }
         return results;
     }
-
-    /**
-     *
-     * @param temps
-     * @return
-     */
     private List<String> convertTempsToImperial(List<String> temps) {
         List<String> convertedTemps = new ArrayList<>();
         try {
@@ -172,11 +157,6 @@ public class WeatherDataService {
         return convertedTemps;
     }
 
-    /**
-     *
-     * @param itr
-     * @return
-     */
     private List<String> collectToList(Iterator<Element> itr) {
         List<String> result = new ArrayList<>();
 
@@ -188,13 +168,6 @@ public class WeatherDataService {
         return result;
     }
 
-    /**
-     * @param itr an iterator of the wind condition html elements scraped from the web
-     *
-     *            the getWindConditions exists to concat the wind data. scraped data returns a wind speed
-     *            and direction in the form of a compass bearing. this method combines the two into a single statistic
-     * @return List<String> results - the wind conditions formatted as '{DIRECTION} {SPEED}' as a list of strings.
-     */
     private List<String> getWindConditions(Iterator<Element> itr) {
 
         List<String> result = new ArrayList<>();

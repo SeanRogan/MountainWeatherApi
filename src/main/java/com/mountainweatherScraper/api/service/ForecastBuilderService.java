@@ -1,9 +1,8 @@
 package com.mountainweatherScraper.api.service;
 
 import com.google.gson.Gson;
-import com.mountainweatherScraper.api.model.DayOfTheWeek;
-import com.mountainweatherScraper.api.model.Report;
 import com.mountainweatherScraper.api.model.Forecast;
+import com.mountainweatherScraper.api.model.Report;
 import com.mountainweatherScraper.api.repository.MountainPeakRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,31 +12,32 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+//todo implement the builder method in this class to break up the responsibilities
+// of the buildForecast method and to make unit testing the createWeatherReportResponse method possible.
 
 /**
  *
  */
 @Service
 public class ForecastBuilderService{
-DayOfTheWeek weekdays;
     private static final Logger logger = LoggerFactory.getLogger(ForecastBuilderService.class);
+    private final MountainPeakRepository peakRepo;
+    private final WeatherDataService weatherDataService;
+    private final Gson gson;
 
-    MountainPeakRepository peakRepo;
-    WeatherDataService weatherDataService;
+
+
+
+
     @Autowired
-    public void setDataService(WeatherDataService weatherDataService) {
-        this.weatherDataService = weatherDataService;
-    }
-    @Autowired
-    public void setPeakRepo(MountainPeakRepository peakRepo) {
+    public ForecastBuilderService(MountainPeakRepository peakRepo, WeatherDataService weatherDataService) {
         this.peakRepo = peakRepo;
-    }
-
-    public ForecastBuilderService() {
+        this.weatherDataService = weatherDataService;
+        this.gson = new Gson();
     }
 
     /**
@@ -46,7 +46,9 @@ DayOfTheWeek weekdays;
 
     //todo i think this method should logically go in its own class, a ResponseBuilderService class.
     public ResponseEntity<String> createWeatherReportResponse(Long peakId, int numberOfDays, String tempFormat) {
-        Gson g = new Gson();
+        //collect weather data
+
+        //
         List<Forecast> weatherForecast = buildListOfForecasts(peakId,
                 weatherDataService
                         .getWeatherData(peakRepo.getPeakUriByPeakId(peakId),
@@ -56,7 +58,7 @@ DayOfTheWeek weekdays;
         HttpStatus status = HttpStatus.OK;
         HttpHeaders headers = new HttpHeaders();
         //set headers
-        String responseBody = g.toJson(weatherForecast);
+        String responseBody = gson.toJson(weatherForecast);
         ResponseEntity<String> response;
         response = new ResponseEntity<>(responseBody, headers, status);
         logger.info("created responseEntity : \n" + response +"\n");
@@ -77,7 +79,7 @@ DayOfTheWeek weekdays;
      * @return Forecast object containing 3 reports, AM, PM and NIGHT,
      * for the mountain specified by the peak id argument.
      */
-    public Forecast buildForecast(Long peakId, List<List<String>> weatherData , int num) {
+    private Forecast buildForecast(Long peakId, List<List<String>> weatherData , int num) {
         //max temps, min, chill, snow, rain weather, wind
         List<String> maxTemps = weatherData.get(0);
         List<String> minTemps = weatherData.get(1);
@@ -134,14 +136,15 @@ DayOfTheWeek weekdays;
      * @return List<Forecast> a list of forecasts,one for each day specifies,
      * each forecast containing 3 weather reports for the day.
      */
-    List<Forecast> buildListOfForecasts(Long peakId, List<List<String>> weatherData, int days) {
+    private List<Forecast> buildListOfForecasts(Long peakId, List<List<String>> weatherData, int days) {
         List<Forecast> forecastList = new ArrayList<>();
-
         for(int n = 0; n < days; n++) {
             forecastList.add(buildForecast(peakId, weatherData, n));
         }
         return forecastList;
     }
+
+
 
 
 }

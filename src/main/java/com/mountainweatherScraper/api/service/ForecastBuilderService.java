@@ -53,7 +53,7 @@ public class ForecastBuilderService{
                 weatherDataService
                         .getWeatherData(peakRepo.getPeakUriByPeakId(peakId),
                                 tempFormat),
-                                numberOfDays);
+                numberOfDays);
 
         HttpStatus status = HttpStatus.OK;
         HttpHeaders headers = new HttpHeaders();
@@ -93,35 +93,38 @@ public class ForecastBuilderService{
         Collections.replaceAll(snowForecast, "-","0.0");
         Collections.replaceAll(rainForecast, "-","0.0");
         logger.trace("creating AM report for day" + num);
-        Report amReport = new Report(peakRepo.getPeakNameById(peakId),
-                dayAndDate.get(num),
-                maxTemps.get(num),
-                minTemps.get(num),
-                windChillTemps.get(num),
-                Float.parseFloat(snowForecast.get(num)),
-                Float.parseFloat(rainForecast.get(num)),
-                weatherSummary.get(num),
-                windCondition.get(num));
+        Report amReport = new Report.ReportBuilder()
+                .name(peakRepo.getPeakNameById(peakId))
+                .day(dayAndDate.get(num))
+                .high(maxTemps.get(num))
+                .low(minTemps.get(num))
+                .chill(windChillTemps.get(num))
+                .snow(Float.parseFloat(snowForecast.get(num)))
+                .rain(Float.parseFloat(rainForecast.get(num)))
+                .weatherConditions(weatherSummary.get(num))
+                .wind(windCondition.get(num)).build();
         logger.trace("creating PM report for day" + num);
-        Report pmReport = new Report(peakRepo.getPeakNameById(peakId),
-                dayAndDate.get(num),
-                maxTemps.get(num+1),
-                minTemps.get(num+1),
-                windChillTemps.get(num+1),
-                Float.parseFloat(snowForecast.get(num+1)),
-                Float.parseFloat(rainForecast.get(num+1)),
-                weatherSummary.get(num+1),
-                windCondition.get(num+1));
+        Report pmReport = new Report.ReportBuilder()
+                .name(peakRepo.getPeakNameById(peakId))
+                .day(dayAndDate.get(num))
+                .high(maxTemps.get(num+1))
+                .low(minTemps.get(num+1))
+                .chill(windChillTemps.get(num+1))
+                .snow(Float.parseFloat(snowForecast.get(num+1)))
+                .rain(Float.parseFloat(rainForecast.get(num+1)))
+                .weatherConditions(weatherSummary.get(num+1))
+                .wind(windCondition.get(num+1)).build();
         logger.trace("creating NIGHT report for day" + num);
-        Report nightReport = new Report(peakRepo.getPeakNameById(peakId),
-                dayAndDate.get(num),
-                maxTemps.get(num+2),
-                minTemps.get(num+2),
-                windChillTemps.get(num+2),
-                Float.parseFloat(snowForecast.get(num+2)),
-                Float.parseFloat(rainForecast.get(num+2)),
-                weatherSummary.get(num+2),
-                windCondition.get(num+2));
+        Report nightReport = new Report.ReportBuilder()
+                .name(peakRepo.getPeakNameById(peakId))
+                .day(dayAndDate.get(num))
+                .high(maxTemps.get(num+2))
+                .low(minTemps.get(num+2))
+                .chill(windChillTemps.get(num+2))
+                .snow(Float.parseFloat(snowForecast.get(num+2)))
+                .rain(Float.parseFloat(rainForecast.get(num+2)))
+                .weatherConditions(weatherSummary.get(num+2))
+                .wind(windCondition.get(num+2)).build();
         logger.trace("returning Forecast");
         return new Forecast(amReport,pmReport,nightReport);
 

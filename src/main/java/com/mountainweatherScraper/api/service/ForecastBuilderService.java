@@ -90,6 +90,7 @@ public class ForecastBuilderService{
         List<String> windCondition = weatherData.get(6);
         List<String> dayAndDate = weatherData.get(7);
         logger.trace("replacing: - with: 0.0 in precipitation forecasts");
+
         Collections.replaceAll(snowForecast, "-","0.0");
         Collections.replaceAll(rainForecast, "-","0.0");
         logger.trace("creating AM report for day" + num);

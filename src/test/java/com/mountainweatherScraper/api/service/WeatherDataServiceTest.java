@@ -12,6 +12,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
+
+//todo this is more of an integration test, need to create a unit test
 @ExtendWith(MockitoExtension.class)
 class WeatherDataServiceTest {
 

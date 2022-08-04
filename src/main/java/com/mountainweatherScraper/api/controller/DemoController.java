@@ -18,6 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+//todo this logic all needs to go into a demo service class
+// before we write unit tests for the controller
+
 @Controller
 public class DemoController {
 

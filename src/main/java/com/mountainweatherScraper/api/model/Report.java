@@ -1,6 +1,8 @@
 package com.mountainweatherScraper.api.model;
 
-public class Report {
+import java.io.Serializable;
+
+public class Report implements Serializable {
 
     private final String dayOfTheWeek;
     private final String peakName;

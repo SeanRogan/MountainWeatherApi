@@ -20,7 +20,8 @@ import java.util.List;
 // of the buildForecast method and to make unit testing the createWeatherReportResponse method possible.
 
 /**
- *
+ * The ForecastBuilderService class is a service class, it contains the business logic responsible
+ * for building weather forecasts and
  */
 @Service
 public class ForecastBuilderService{
@@ -40,9 +41,7 @@ public class ForecastBuilderService{
         this.gson = new Gson();
     }
 
-    /**
-     *
-     */
+
 
     //todo i think this method should logically go in its own class, a ResponseBuilderService class.
     public ResponseEntity<String> createWeatherReportResponse(Long peakId, int numberOfDays, String tempFormat) {
@@ -90,7 +89,7 @@ public class ForecastBuilderService{
         List<String> windCondition = weatherData.get(6);
         List<String> dayAndDate = weatherData.get(7);
         logger.trace("replacing: - with: 0.0 in precipitation forecasts");
-
+        //todo the ide says the following replaceAll method calls are not doing anything but...they are...maybe this needs a unit test to prove that
         Collections.replaceAll(snowForecast, "-","0.0");
         Collections.replaceAll(rainForecast, "-","0.0");
         logger.trace("creating AM report for day" + num);
@@ -142,8 +141,8 @@ public class ForecastBuilderService{
      */
     private List<Forecast> buildListOfForecasts(Long peakId, List<List<String>> weatherData, int days) {
         List<Forecast> forecastList = new ArrayList<>();
-        for(int n = 0; n < days; n++) {
-            forecastList.add(buildForecast(peakId, weatherData, n));
+        for(int i = 0; i < days; i++) {
+            forecastList.add(buildForecast(peakId, weatherData, i));
         }
         return forecastList;
     }

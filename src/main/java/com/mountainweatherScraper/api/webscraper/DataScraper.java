@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 /**
- *The DataScraper class handles the web-scraping process
+ *The DataScraper class handles the web-scraping process by using the Jsoup library
  */
 @Component
 @NoArgsConstructor

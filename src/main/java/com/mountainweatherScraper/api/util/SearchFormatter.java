@@ -16,7 +16,9 @@ public class SearchFormatter {
     //formats search string received from request from uri format to a normal string.
     // ex. a search for "mount washington" would come in as "query=mount+washington"
     /**
-     *
+     * formats the query string by changing to lowercase and replacing '+' characters with whitespace.
+     * @param query the query as a String to be formatted
+     * @return the formatted query as a String
      */
     public String format(final String query) {
         logger.info("Formatting Search Query for use in database Query");

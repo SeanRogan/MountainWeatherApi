@@ -5,5 +5,6 @@ the API can be queried for daily or extended 6-day weather reports, for over 100
 # The api homepage with demo and documentation, deployed on heroku
 ## https://peak-conditions-api.herokuapp.com/
 
-## and check out the Rapid Api Hub
+# and check out the Rapid Api Hub
 ## https://rapidapi.com/SeanRogan/api/peak-conditions/
+

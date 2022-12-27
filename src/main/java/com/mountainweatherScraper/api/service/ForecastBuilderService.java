@@ -41,9 +41,17 @@ public class ForecastBuilderService{
         this.gson = new Gson();
     }
 
+    /**
+     * createWeatherReportResponse method takes a Long number as peakId ,
+     * an integer 'numberOfDays' representing a 1 or 6 day report being requested,
+     * and string which was the temp-format header of the request.
+     * @param peakId
+     * @param numberOfDays
+     * @param tempFormat
+     * @return Returns a responseEntity<String> object with the forecast requested, or an error message if something went wrong in the service class.
+     */
 
 
-    //todo i think this method should logically go in its own class, a ResponseBuilderService class.
     public ResponseEntity<String> createWeatherReportResponse(Long peakId, int numberOfDays, String tempFormat) {
         //collect weather data
 

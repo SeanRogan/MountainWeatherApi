@@ -21,8 +21,8 @@ public class DataScraper {
      */
     public Document scrapeDocument(String uri) {
         try {
-            return Jsoup.connect(uri).get();
-        } catch (IOException e)
+             return Jsoup.connect(uri).get();
+        } catch (Exception e)
         {
             logger.error("An error has occured in MountainWeatherScraper.api.webscraper.DataScraper.scrapeDocument() : \n"+
                     e.getMessage());

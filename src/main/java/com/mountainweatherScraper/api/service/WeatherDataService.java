@@ -89,6 +89,9 @@ public class WeatherDataService {
             if(dataList.get(2).isEmpty()) {
                 windChillElements = doc.getElementsByClass(windChillAlt)
                         .select("span.temp");
+                //maybe this should be
+                //dataList.remove(2);
+                //dataList.add(2,collectToList(windChillElements.iterator()));
                 dataList.add(2,collectToList(windChillElements.iterator()));
             }
                 try{
@@ -107,15 +110,17 @@ public class WeatherDataService {
                 } catch (NullPointerException e) {
                     logger.warn(e.getMessage() + ": \n A NullPointer Exception was thrown because there was no valid Temp-format header value provided");
                 }
+
+
             //get snowfall
             Elements snowFallElements = doc.getElementsByClass(snowFallRow)
                     .select("td.forecast__table-relative")
-                    .select("span.snow");
+                    .select("div.snow-amount");
             dataList.add(3, collectToList(snowFallElements.iterator()));
             //get rainfall
             Elements rainFallElements = doc.getElementsByClass(rainFallRow)
                     .select("td.forecast__table-relative")
-                    .select("span.rain");
+                    .select("span.forecast__table-value");
             dataList.add(4, collectToList(rainFallElements.iterator()));
 
             //get weather elements
@@ -128,10 +133,10 @@ public class WeatherDataService {
                     .select("tr.forecast__table-wind");
             dataList.add(6, getWindConditions(windElements.select("td.iconcell").iterator()));
 
+            //get days of the week
             Elements dateElements = doc.getElementsByClass(dayAndDate).select("div > div:eq(1)");
             Elements dayOfWeekElements = doc.getElementsByClass(dayAndDate).select("div > div:eq(0)");
             dataList.add(7, getDayAndDateElements(dateElements, dayOfWeekElements));
-            //get days of the week
         }
         return dataList;
     }

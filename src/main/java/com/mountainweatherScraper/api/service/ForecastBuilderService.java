@@ -54,20 +54,17 @@ public class ForecastBuilderService{
 
     public ResponseEntity<String> createWeatherReportResponse(Long peakId, int numberOfDays, String tempFormat) {
         //collect weather data
-
-        //
         List<Forecast> weatherForecast = buildListOfForecasts(peakId,
                 weatherDataService
                         .getWeatherData(peakRepo.getPeakUriByPeakId(peakId),
                                 tempFormat),
                 numberOfDays);
 
-        HttpStatus status = HttpStatus.OK;
         HttpHeaders headers = new HttpHeaders();
         //set headers
         String responseBody = gson.toJson(weatherForecast);
         ResponseEntity<String> response;
-        response = new ResponseEntity<>(responseBody, headers, status);
+        response = new ResponseEntity<>(responseBody, headers, HttpStatus.OK);
         logger.info("created responseEntity : \n" + response +"\n");
         return response;
 
@@ -97,9 +94,8 @@ public class ForecastBuilderService{
         List<String> windCondition = weatherData.get(6);
         List<String> dayAndDate = weatherData.get(7);
         logger.trace("replacing: - with: 0.0 in precipitation forecasts");
-        //todo the ide says the following replaceAll method calls are not doing anything but...they are...maybe this needs a unit test to prove that
-        Collections.replaceAll(snowForecast, "-","0.0");
-        Collections.replaceAll(rainForecast, "-","0.0");
+        Collections.replaceAll(snowForecast, "—","0.0");
+        Collections.replaceAll(rainForecast, "—","0.0");
         logger.trace("creating AM report for day" + num);
         Report amReport = new Report.ReportBuilder()
                 .name(peakRepo.getPeakNameById(peakId))
@@ -108,6 +104,7 @@ public class ForecastBuilderService{
                 .low(minTemps.get(num))
                 .chill(windChillTemps.get(num))
                 .snow(Float.parseFloat(snowForecast.get(num)))
+                //todo this will throw IOB error if theres no rain forecast. probably same with snow above. i think every mountain will have either one or the other so this could potentially be the cause of all errors
                 .rain(Float.parseFloat(rainForecast.get(num)))
                 .weatherConditions(weatherSummary.get(num))
                 .wind(windCondition.get(num)).build();

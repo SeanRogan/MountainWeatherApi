@@ -35,7 +35,8 @@ public class FrontEndTest {
             try {
                 driver.findElement(By.id(buttonId)).click();
             } catch (WebDriverException e) {
-                e.printStackTrace();            }
+                e.printStackTrace();
+            }
         } catch (TimeoutException e) {
             e.printStackTrace();
         }

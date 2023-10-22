@@ -16,7 +16,7 @@ import java.util.List;
 
 
 /**
- * DataService is a service class.
+ * WeatherDataService is a service class.
  * it contains business logic to control web-scraping of pages,
  * populating the database with relevant information about pages on server start-up,
  * and collect weather data from those pages.
@@ -51,18 +51,22 @@ public class WeatherDataService {
     public List<List<String>> getWeatherData(String uri , String tempFormat) {
 
         List<List<String>> dataList = new ArrayList<>(7);
+        //html tags to pull information from the webpage
         String weatherConditionsRow = "forecast__table-summary";
         String maxTempRow = "forecast__table-max-temperature";
         String minTempRow = "forecast__table-min-temperature";
+        //windchill is used on the site to be scraped html tags during colder months of the year...
         String windChillRow = "forecast__table-chill";
+        //...feels is used during warmer months
         String windChillAlt = "forecast__table-feels";
         String rainFallRow = "forecast__table-rain";
         String snowFallRow = "forecast__table-snow";
         String windRow = "forecast__table-wind";
         String dayAndDate = "forecast__table-days-content";
         logger.info("scraping weather data from: " + uri);
+        //attempt to scrape webpage
         Document doc = ds.scrapeDocument(uri);
-
+        //if the document comes back from the datascraper, begin to pull info from it and collect it in a List
         if(doc != null) {
 
             //get high temps
@@ -85,6 +89,9 @@ public class WeatherDataService {
             if(dataList.get(2).isEmpty()) {
                 windChillElements = doc.getElementsByClass(windChillAlt)
                         .select("span.temp");
+                //maybe this should be
+                //dataList.remove(2);
+                //dataList.add(2,collectToList(windChillElements.iterator()));
                 dataList.add(2,collectToList(windChillElements.iterator()));
             }
                 try{
@@ -103,15 +110,17 @@ public class WeatherDataService {
                 } catch (NullPointerException e) {
                     logger.warn(e.getMessage() + ": \n A NullPointer Exception was thrown because there was no valid Temp-format header value provided");
                 }
+
+
             //get snowfall
             Elements snowFallElements = doc.getElementsByClass(snowFallRow)
                     .select("td.forecast__table-relative")
-                    .select("span.snow");
+                    .select("div.snow-amount");
             dataList.add(3, collectToList(snowFallElements.iterator()));
             //get rainfall
             Elements rainFallElements = doc.getElementsByClass(rainFallRow)
                     .select("td.forecast__table-relative")
-                    .select("span.rain");
+                    .select("span.forecast__table-value");
             dataList.add(4, collectToList(rainFallElements.iterator()));
 
             //get weather elements
@@ -124,16 +133,17 @@ public class WeatherDataService {
                     .select("tr.forecast__table-wind");
             dataList.add(6, getWindConditions(windElements.select("td.iconcell").iterator()));
 
+            //get days of the week
             Elements dateElements = doc.getElementsByClass(dayAndDate).select("div > div:eq(1)");
             Elements dayOfWeekElements = doc.getElementsByClass(dayAndDate).select("div > div:eq(0)");
             dataList.add(7, getDayAndDateElements(dateElements, dayOfWeekElements));
-            //get days of the week
         }
         return dataList;
     }
     private List<String> getDayAndDateElements(Elements dateElements, Elements dayOfWeekElements) {
         List<String> daysOfTheWeek = new ArrayList<>();
         List<String> daysOfTheMonth = new ArrayList<>();
+        //todo this could be multithreaded to improve performance maybe?
         dateElements.forEach(i -> daysOfTheMonth.add(i.text()));
         dayOfWeekElements.forEach(i -> daysOfTheWeek.add(i.text()));
         List<String> results = new ArrayList<>(6);

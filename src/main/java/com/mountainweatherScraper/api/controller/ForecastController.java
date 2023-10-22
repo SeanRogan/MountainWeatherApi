@@ -20,12 +20,12 @@ public class ForecastController {
 
 // todo future feature : request handler takes the request and handles authentication/authorization
 
+   private final ForecastBuilderService service;
     private static final Logger logger = LoggerFactory.getLogger(ForecastController.class);
     @Autowired
-    public void setForecastBuilderService(ForecastBuilderService service) {
+    public ForecastController(ForecastBuilderService service) {
         this.service = service;
     }
-    ForecastBuilderService service;
 
     /**
      * @param request The HttpServlet Request received by the controller

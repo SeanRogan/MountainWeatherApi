@@ -14,6 +14,7 @@ import java.util.Map;
 
 @Repository
 public interface MountainPeakRepository extends PagingAndSortingRepository<MountainPeak, Long>,  CustomRepository {
+    //nativeQuery=true in order to use postgresql CONCAT syntax
     @Query(value = "SELECT m.peak_name, peak_id FROM mountain_peak m WHERE m.peak_name ILIKE CONCAT(:q,'%') ;" , nativeQuery = true)
     List<Map<String,Long>> getTop10MountainPeakIdByName(@Param("q") String query);
     @Query("SELECT m.uri FROM mountain_peak m WHERE m.peakId = ?1")

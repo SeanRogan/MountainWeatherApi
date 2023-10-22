@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 /**
- *The DataScraper class handles the web-scraping process
+ *The DataScraper class handles the web-scraping process by using the Jsoup library
  */
 @Component
 @NoArgsConstructor
@@ -21,8 +21,8 @@ public class DataScraper {
      */
     public Document scrapeDocument(String uri) {
         try {
-            return Jsoup.connect(uri).get();
-        } catch (IOException e)
+             return Jsoup.connect(uri).get();
+        } catch (Exception e)
         {
             logger.error("An error has occured in MountainWeatherScraper.api.webscraper.DataScraper.scrapeDocument() : \n"+
                     e.getMessage());

@@ -23,8 +23,7 @@ import java.util.Set;
 /**
  * DatabaseInitializerService is a service class.
  * it contains business logic to control web-scraping of pages,
- * populating the database with relevant information about pages on server start-up,
- * and collect weather data from those pages.
+ * populating the database with relevant information about pages on calling the init() method.
  */
 @NoArgsConstructor
 @Service
@@ -50,7 +49,7 @@ public class DatabaseInitializerService {
     /**
      * the init method initialized the Database : it connects to the website, collects all major mountain range name/uri info to a Map,
      * then loops through the map to create a new entity in the Postgres database for each major range,
-     * along with their associated subranges, and all the mountain peaks associates with that mountain range.
+     * along with their associated sub-ranges, and all the mountain peaks associates with that mountain range.
      */
 
     private boolean initialized;
@@ -82,7 +81,7 @@ public class DatabaseInitializerService {
     /**
      * @param uri - the uri of the subrange the peaks belong to
      *
-     * @return Set<MountainPeak> returns a Set of all the MountainPeak objects's associated with that subrange
+     * @return Set<MountainPeak> returns a Set of all the MountainPeak objects associated with that subrange
      */
     private Set<MountainPeak> getAllPeaksInRange(String uri) {
 

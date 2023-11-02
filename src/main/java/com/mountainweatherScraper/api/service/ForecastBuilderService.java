@@ -53,21 +53,27 @@ public class ForecastBuilderService{
 
 
     public ResponseEntity<String> createWeatherReportResponse(Long peakId, int numberOfDays, String tempFormat) {
-        //collect weather data
-        List<Forecast> weatherForecast = buildListOfForecasts(peakId,
-                weatherDataService
-                        .getWeatherData(peakRepo.getPeakUriByPeakId(peakId),
-                                tempFormat),
-                numberOfDays);
-
-        HttpHeaders headers = new HttpHeaders();
-        //set headers
-        String responseBody = gson.toJson(weatherForecast);
+        //validate peak id by attempting a uri lookup, if the string is null after lookup, the peak isnt in the database.
+        String uri = peakRepo.getPeakUriByPeakId(peakId);
         ResponseEntity<String> response;
-        response = new ResponseEntity<>(responseBody, headers, HttpStatus.OK);
-        logger.info("created responseEntity : \n" + response +"\n");
+        HttpHeaders headers = new HttpHeaders();
+        //if id check is not null, create weather report, else return an error message
+        if (uri != null) {
+            //collect weather data
+            List<Forecast> weatherForecast = buildListOfForecasts(peakId,
+                    weatherDataService
+                            .getWeatherData(uri,
+                                    tempFormat),
+                    numberOfDays);
+            String responseBody = gson.toJson(weatherForecast);
+            response = new ResponseEntity<>(responseBody, headers, HttpStatus.OK);
+            logger.info("created responseEntity : \n" + response + "\n");
+            return response;
+        }
+        //if the application gets this far the idCheck must have been null, so send an error response.
+        String badIdResponseBody = "Sorry, but that peak id is not associated with any mountain. Please double check the peak id is correct and try again.";
+        response = new ResponseEntity<>(badIdResponseBody, headers, HttpStatus.NOT_FOUND);
         return response;
-
     }
     /**
      * @param peakId the id of the mountain peak.
